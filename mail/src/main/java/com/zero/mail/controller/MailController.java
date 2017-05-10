@@ -1,12 +1,12 @@
-package com.zero.controller;
+package com.zero.mail.controller;
 
+import com.zero.mail.service.MailService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.zero.service.MailService;
 import com.zero.vo.BaseReturnVo;
 
 import io.swagger.annotations.ApiOperation;

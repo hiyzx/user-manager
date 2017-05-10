@@ -1,13 +1,13 @@
-package com.zero.controller;
+package com.zero.user.controller;
 
 import com.zero.enums.CodeEnum;
 import com.zero.exception.BaseException;
 import com.zero.po.User;
-import com.zero.service.UserService;
+import com.zero.user.service.UserService;
+import com.zero.user.dto.UserDto;
 import com.zero.util.SessionHelper;
 import com.zero.vo.BaseReturnVo;
 import com.zero.vo.ReturnVo;
-import com.zero.vo.dto.UserDto;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.stereotype.Controller;

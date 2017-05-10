@@ -1,8 +1,7 @@
-package com.zero.service;
+package com.zero.mail.service;
 
+import com.zero.mail.util.MailUtil;
 import org.springframework.stereotype.Service;
-
-import com.zero.util.MailUtil;
 
 /**
  * @Description:

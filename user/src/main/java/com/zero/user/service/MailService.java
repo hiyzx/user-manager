@@ -1,7 +1,7 @@
-package com.zero.service;
+package com.zero.user.service;
 
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.zero.util.HttpClient;
+import com.zero.user.util.HttpClient;
 import com.zero.util.JsonUtil;
 import com.zero.vo.BaseReturnVo;
 import org.slf4j.Logger;

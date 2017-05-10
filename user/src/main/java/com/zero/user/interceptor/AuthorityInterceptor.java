@@ -1,4 +1,4 @@
-package com.zero.interceptor;
+package com.zero.user.interceptor;
 
 import com.zero.exception.BaseException;
 

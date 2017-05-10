@@ -1,7 +1,7 @@
 /*
 * Copyright (c) 2016 bond. All Rights Reserved.
 */
-package com.zero.util;
+package com.zero.mail.util;
 
 import javax.mail.internet.MimeMessage;
 

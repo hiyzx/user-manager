@@ -1,4 +1,4 @@
-package com.zero.controller;
+package com.zero.user.controller;
 
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 

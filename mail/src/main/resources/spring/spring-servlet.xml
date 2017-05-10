@@ -15,7 +15,7 @@
     <context:property-placeholder location="classpath:mail.properties"/>
 
     <!-- 注解扫描包 -->
-    <context:component-scan base-package="com.zero.controller"/>
+    <context:component-scan base-package="com.zero.mail.controller"/>
 
     <mvc:annotation-driven/>
 
@@ -52,5 +52,5 @@
     </bean>
 
     <!--发邮件的方法-->
-    <bean id="mailUtil" class="com.zero.util.MailUtil"/>
+    <bean id="mailUtil" class="com.zero.mail.util.MailUtil"/>
 </beans>

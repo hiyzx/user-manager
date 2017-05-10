@@ -1,4 +1,4 @@
-package com.zero.vo.dto;
+package com.zero.user.dto;
 
 /**
  * Created by HP on 2017/4/30.

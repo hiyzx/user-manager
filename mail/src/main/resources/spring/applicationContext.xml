@@ -9,5 +9,5 @@
     <context:property-placeholder location="classpath:mail.properties"/>
 
     <!-- 扫描目录 -->
-    <context:component-scan base-package="com.zero.service"/>
+    <context:component-scan base-package="com.zero.mail.service"/>
 </beans>

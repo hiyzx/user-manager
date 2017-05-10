@@ -1,4 +1,4 @@
-package com.zero.controller;
+package com.zero.user.controller;
 
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.databind.ObjectMapper;

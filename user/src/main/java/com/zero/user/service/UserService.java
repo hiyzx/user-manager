@@ -1,11 +1,11 @@
-package com.zero.service;
+package com.zero.user.service;
 
 import com.zero.dao.UserMapper;
 import com.zero.enums.CodeEnum;
 import com.zero.exception.BaseException;
 import com.zero.po.User;
 import com.zero.po.UserExample;
-import com.zero.vo.dto.UserDto;
+import com.zero.user.dto.UserDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;

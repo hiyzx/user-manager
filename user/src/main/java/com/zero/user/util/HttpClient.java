@@ -1,4 +1,4 @@
-package com.zero.util;
+package com.zero.user.util;
 
 import java.io.IOException;
 import java.io.InterruptedIOException;

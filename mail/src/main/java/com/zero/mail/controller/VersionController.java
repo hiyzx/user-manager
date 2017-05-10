@@ -1,4 +1,4 @@
-package com.zero.controller;
+package com.zero.mail.controller;
 
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Value;

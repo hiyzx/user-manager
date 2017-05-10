@@ -1,4 +1,4 @@
-package com.zero.swagger;
+package com.zero.user.swagger;
 
 public class SwaggerFilter extends org.springframework.web.filter.OncePerRequestFilter {
 	private static final org.slf4j.Logger LOG = org.slf4j.LoggerFactory.getLogger(SwaggerFilter.class);

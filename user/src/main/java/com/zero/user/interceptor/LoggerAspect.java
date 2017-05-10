@@ -1,7 +1,6 @@
-package com.zero.interceptor;
+package com.zero.user.interceptor;
 
 import com.zero.exception.BaseException;
-import com.zero.util.IpUtil;
 import com.zero.util.JsonUtil;
 import com.zero.util.SessionHelper;
 import org.aspectj.lang.JoinPoint;
@@ -27,12 +26,13 @@ import java.util.Map;
 @Aspect
 public class LoggerAspect {
     private static final Logger LOG = LoggerFactory.getLogger(LoggerAspect.class);
-    private static final String HOSTNAME = IpUtil.getHostName(IpUtil.getInetAddress());
+    private static final String HOSTNAME = com.zero.user.util.IpUtil.getHostName(com.zero.user.util.IpUtil.getInetAddress());
     @Resource
     private HttpServletRequest request;
 
     // http://stackoverflow.com/questions/29653664/how-to-correctly-use-spring-aop-to-select-the-execution-of-a-method-annotated-wi
-    @Pointcut("within(@org.springframework.stereotype.Controller *) && @annotation(org.springframework.web.bind.annotation.RequestMapping)")
+    //@Pointcut("within(@org.springframework.stereotype.Controller *) && @annotation(org.springframework.web.bind.annotation.RequestMapping)")
+    @Pointcut("within(@org.springframework.stereotype.Controller *)")
     // @Pointcut("execution(public * com.zero.controller.*.*(..))")
     private void logController() {
     };
@@ -40,7 +40,7 @@ public class LoggerAspect {
     /**
      * 定义拦截器的切面
      */
-    @Pointcut("execution(boolean com.zero.interceptor..preHandle(..))")
+    @Pointcut("execution(boolean com.zero.user.interceptor..preHandle(..))")
     private void logInterceptor() {
     };
 
@@ -75,7 +75,7 @@ public class LoggerAspect {
     private StringBuilder parseRequest() throws Exception {
         StringBuilder sb = new StringBuilder();
         sb.append(request.getRequestURI()).append(", ");
-        sb.append("IP->").append(IpUtil.getIpAddress(request));
+        sb.append("IP->").append(com.zero.user.util.IpUtil.getIpAddress(request));
         Map<String, String[]> parameters = request.getParameterMap();
         if (!parameters.isEmpty()) {
             sb.append(", parameters->[");

@@ -13,8 +13,8 @@
 	http://www.springframework.org/schema/security/spring-security-4.0.xsd">
 
     <!-- 注解扫描包 -->
-    <context:component-scan base-package="com.zero.controller"/>
-    <bean class="com.zero.swagger.SwaggerConfig">
+    <context:component-scan base-package="com.zero.user.controller"/>
+    <bean class="com.zero.user.swagger.SwaggerConfig">
         <constructor-arg name="version" value="${project.version}"/>
     </bean>
 
@@ -39,7 +39,7 @@
 
     <mvc:resources mapping="swagger-ui.html" location="classpath:/META-INF/resources/"/>
     <mvc:resources mapping="/webjars/**" location="classpath:/META-INF/resources/webjars/"/>
-    <bean id="swaggerFilter" class="com.zero.swagger.SwaggerFilter">
+    <bean id="swaggerFilter" class="com.zero.user.swagger.SwaggerFilter">
         <constructor-arg value="${ssm.swagger.enabled}"/>
     </bean>
     <bean id="encodingFilter" class="org.springframework.web.filter.CharacterEncodingFilter">
@@ -58,7 +58,7 @@
     <mvc:interceptors>
         <mvc:interceptor>
             <mvc:mapping path="/**"/>
-            <bean class="com.zero.interceptor.CrossDomainInterceptor"/>
+            <bean class="com.zero.user.interceptor.CrossDomainInterceptor"/>
         </mvc:interceptor>
         <mvc:interceptor>
             <mvc:mapping path="/**"/>
@@ -74,8 +74,8 @@
             <mvc:exclude-mapping path="/swagger-resources/**"/>
             <mvc:exclude-mapping path="/v2/api-docs"/>
             <mvc:exclude-mapping path="/webjars/**"/>
-            <bean class="com.zero.interceptor.AuthorityInterceptor"/>
+            <bean class="com.zero.user.interceptor.AuthorityInterceptor"/>
         </mvc:interceptor>
     </mvc:interceptors>
-    <bean id="loggerAspect" class="com.zero.interceptor.LoggerAspect"/>
+    <bean id="loggerAspect" class="com.zero.user.interceptor.LoggerAspect"/>
 </beans>

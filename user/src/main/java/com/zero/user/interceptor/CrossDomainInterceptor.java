@@ -1,4 +1,4 @@
-package com.zero.interceptor;
+package com.zero.user.interceptor;
 
 public class CrossDomainInterceptor extends org.springframework.web.servlet.handler.HandlerInterceptorAdapter {
 	private static final org.slf4j.Logger LOG = org.slf4j.LoggerFactory.getLogger(CrossDomainInterceptor.class);
