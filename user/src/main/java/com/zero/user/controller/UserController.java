@@ -30,7 +30,7 @@ public class UserController {
     @ResponseBody
     @RequestMapping(value = "/register.json", method = RequestMethod.POST)
     @ApiOperation("注册")
-    private ReturnVo<String> register(HttpServletRequest request, @RequestBody UserDto userDto) throws Exception {
+    public ReturnVo<String> register(HttpServletRequest request, @RequestBody UserDto userDto) throws Exception {
         int userId = userService.add(userDto);
         String sessionId = request.getSession().getId();
         SessionHelper.pushUserId(sessionId, userId);
@@ -40,7 +40,7 @@ public class UserController {
     @ResponseBody
     @RequestMapping(value = "/login.json", method = RequestMethod.POST)
     @ApiOperation("登陆")
-    private ReturnVo<String> login(HttpServletRequest request, @RequestParam String username,
+    public ReturnVo<String> login(HttpServletRequest request, @RequestParam String username,
             @RequestParam String password) throws Exception {
         int userId = userService.login(username, password);
         String sessionId = request.getSession().getId();
@@ -51,7 +51,7 @@ public class UserController {
     @ResponseBody
     @RequestMapping(value = "/getUserInfo.json", method = RequestMethod.GET)
     @ApiOperation("获取用户信息")
-    private ReturnVo<User> getUserInfo(@RequestParam String sessionId,
+    public ReturnVo<User> getUserInfo(@RequestParam String sessionId,
             @ApiParam(value = "用户id", required = true) @RequestParam int userId) throws Exception {
         if (SessionHelper.getUserId(sessionId) == userId) {
             User userInfo = userService.getUserInfo(userId);
@@ -64,7 +64,7 @@ public class UserController {
     @ResponseBody
     @RequestMapping(value = "/logout.json", method = RequestMethod.POST)
     @ApiOperation("注销")
-    private BaseReturnVo logout(HttpServletRequest request) throws Exception {
+    public BaseReturnVo logout(HttpServletRequest request) throws Exception {
         SessionHelper.clearSessionId(request.getSession().getId());
         return BaseReturnVo.success();
     }

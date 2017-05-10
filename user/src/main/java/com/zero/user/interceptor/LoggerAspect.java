@@ -20,19 +20,17 @@ import java.util.Map;
  * http://blog.csdn.net/xiaoxian8023/article/details/17285809<br/>
  * 
  * @Description: 全局日志类
- * @author Super.Li
- * @date Apr 11, 2017
  */
 @Aspect
 public class LoggerAspect {
     private static final Logger LOG = LoggerFactory.getLogger(LoggerAspect.class);
-    private static final String HOSTNAME = com.zero.user.util.IpUtil.getHostName(com.zero.user.util.IpUtil.getInetAddress());
+    private static final String HOSTNAME = com.zero.user.util.IpUtil
+            .getHostName(com.zero.user.util.IpUtil.getInetAddress());
     @Resource
     private HttpServletRequest request;
 
     // http://stackoverflow.com/questions/29653664/how-to-correctly-use-spring-aop-to-select-the-execution-of-a-method-annotated-wi
-    //@Pointcut("within(@org.springframework.stereotype.Controller *) && @annotation(org.springframework.web.bind.annotation.RequestMapping)")
-    @Pointcut("within(@org.springframework.stereotype.Controller *)")
+    @Pointcut("within(@org.springframework.stereotype.Controller *) &&@annotation(org.springframework.web.bind.annotation.RequestMapping)")
     // @Pointcut("execution(public * com.zero.controller.*.*(..))")
     private void logController() {
     };
