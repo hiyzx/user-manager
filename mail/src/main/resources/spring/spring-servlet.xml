@@ -30,27 +30,27 @@
     </bean>
 
     <bean id="javaMailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
-        <property name="host" value="smtp.qq.com"/>
-        <property name="port" value="587"/>
-        <property name="username" value="452002276@qq.com"/>
-        <property name="password" value="vtbcmlnxaiqqbiii"/>
+        <property name="host" value="${mail.host}"/>
+        <property name="port" value="${mail.port}"/>
+        <property name="username" value="${mail.username}"/>
+        <property name="password" value="${mail.password}"/>
         <property name="javaMailProperties">
-            <props >
+            <props>
                 <prop key="mail.smtp.auth">true</prop>
                 <prop key="mail.smtp.starttls.enable">true</prop>
             </props>
         </property>
     </bean>
     <bean id="simpleMailMessage" class="org.springframework.mail.SimpleMailMessage">
-        <property name="from" value="452002276@qq.com" />
+        <property name="from" value="${mail.username}"/>
     </bean>
     <!--线程池异步发送邮件-->
     <bean id="taskExecutor" class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">
-        <property name="corePoolSize" value="5" />
-        <property name="maxPoolSize" value="10" />
-        <property name="queueCapacity" value="25" />
+        <property name="corePoolSize" value="${threadPool.corePoolSize}"/>
+        <property name="maxPoolSize" value="${threadPool.maxPoolSize}"/>
+        <property name="queueCapacity" value="${threadPool.queueCapacity}"/>
     </bean>
 
     <!--发邮件的方法-->
-    <bean id ="mailUtil" class="com.zero.util.MailUtil"/>
+    <bean id="mailUtil" class="com.zero.util.MailUtil"/>
 </beans>

@@ -11,7 +11,7 @@
 		http://www.springframework.org/schema/context
         http://www.springframework.org/schema/context/spring-context-4.0.xsd">
     <!-- jdbcconfig -->
-    <context:property-placeholder location="classpath:dev/ssm.properties"/>
+    <context:property-placeholder location="classpath:dev/user.properties"/>
 
     <!-- 数据源 -->
     <!-- Hikari Datasource -->

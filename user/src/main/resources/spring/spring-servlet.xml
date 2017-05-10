@@ -77,4 +77,5 @@
             <bean class="com.zero.interceptor.AuthorityInterceptor"/>
         </mvc:interceptor>
     </mvc:interceptors>
+    <bean id="loggerAspect" class="com.zero.interceptor.LoggerAspect"/>
 </beans>
