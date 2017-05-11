@@ -73,11 +73,20 @@
     <!-- 扫描目录 -->
     <context:component-scan base-package="com.zero.user.service"/>
 
+    <bean class="com.zero.util.MediaHelper">
+        <constructor-arg name="mediaPath" value="${upload.path}" />
+        <constructor-arg name="mediaHost" value="${upload.host}" />
+    </bean>
+
     <bean id="mailHttpClient" class="com.zero.user.util.HttpClient">
         <constructor-arg name="scheme" value="${mail.scheme}" />
         <constructor-arg name="hostname" value="${mail.hostname}" />
         <constructor-arg name="port" value="${mail.port}" />
         <constructor-arg name="authorizationValue" value="${mail.authorizationValue}" />
+    </bean>
+
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <property name="maxUploadSize" value="1024000000" />
     </bean>
 
 </beans>

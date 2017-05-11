@@ -14,7 +14,7 @@
     </modules>
     <packaging>pom</packaging>
 
-    <!--<repositories>
+    <repositories>
         <repository>
             <id>public</id>
             <url>http://10.0.1.56:8080/content/groups/public/</url>
@@ -37,7 +37,7 @@
                 <enabled>true</enabled>
             </snapshots>
         </pluginRepository>
-    </pluginRepositories>-->
+    </pluginRepositories>
     <properties>
         <spring-version>4.3.2.RELEASE</spring-version>
         <spring-security-version>4.0.2.RELEASE</spring-security-version>
@@ -46,6 +46,7 @@
         <log4j.version>1.2.17</log4j.version>
         <jackson-version>2.7.2</jackson-version>
         <httpcomponents-version>4.4</httpcomponents-version>
+        <poi-version>3.11</poi-version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.build.timestamp.format>yyyyMMddHHmmssZ</maven.build.timestamp.format>
         <project.build.time>${maven.build.timestamp}</project.build.time>
@@ -234,6 +235,26 @@
                 <artifactId>springfox-staticdocs</artifactId>
                 <version>${springfox.version}</version>
                 <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.poi</groupId>
+                <artifactId>poi</artifactId>
+                <version>${poi-version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.poi</groupId>
+                <artifactId>poi-ooxml</artifactId>
+                <version>${poi-version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.poi</groupId>
+                <artifactId>poi-ooxml-schemas</artifactId>
+                <version>${poi-version}</version>
+            </dependency>
+            <dependency>
+                <groupId>commons-fileupload</groupId>
+                <artifactId>commons-fileupload</artifactId>
+                <version>1.3.1</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

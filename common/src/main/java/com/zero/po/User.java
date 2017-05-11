@@ -20,6 +20,9 @@ public class User {
     @ApiModelProperty(value = "邮箱")
     private String email;
 
+    @ApiModelProperty(value = "头像")
+    private String headimg;
+
     public Integer getId() {
         return id;
     }
@@ -66,5 +69,13 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email == null ? null : email.trim();
+    }
+
+    public String getHeadimg() {
+        return headimg;
+    }
+
+    public void setHeadimg(String headimg) {
+        this.headimg = headimg == null ? null : headimg.trim();
     }
 }

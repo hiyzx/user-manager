@@ -1,4 +1,4 @@
-package com.zero.user.dto;
+package com.zero.user.vo.dto;
 
 /**
  * Created by HP on 2017/4/30.
@@ -16,9 +16,6 @@ public class UserDto {
 
     @io.swagger.annotations.ApiModelProperty(value = "密码")
     private String password;
-
-    @io.swagger.annotations.ApiModelProperty(value = "邮箱")
-    private String email;
 
     public Integer getAge() {
         return age;
@@ -50,13 +47,5 @@ public class UserDto {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
     }
 }

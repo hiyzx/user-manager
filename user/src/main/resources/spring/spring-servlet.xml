@@ -65,7 +65,8 @@
             <mvc:exclude-mapping path="/login.json"/>
             <mvc:exclude-mapping path="/register.json"/>
             <mvc:exclude-mapping path="/version"/>
-            <mvc:exclude-mapping path="/sendMail.json"/>
+            <mvc:exclude-mapping path="/exportExcel.json"/>
+            <mvc:exclude-mapping path="/validateEmail.json"/>
             <mvc:exclude-mapping path="/404"/>
             <mvc:exclude-mapping path="/400"/>
             <mvc:exclude-mapping path="/405"/>

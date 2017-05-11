@@ -14,7 +14,8 @@ public class RedisHelper {
 
     static {
         try {
-            context = new org.springframework.context.support.ClassPathXmlApplicationContext("applicationContext-redis.xml");
+            context = new org.springframework.context.support.ClassPathXmlApplicationContext(
+                    "applicationContext-redis.xml");
         } catch (Exception var1) {
             throw new IllegalArgumentException("applicationContext-redis.xml没有被找到");
         }
@@ -70,7 +71,7 @@ public class RedisHelper {
         } catch (Exception e) {
             throw e;
         } finally {
-           jedis.close();
+            jedis.close();
         }
 
         return rtn;
@@ -85,13 +86,17 @@ public class RedisHelper {
         } catch (Exception e) {
             throw e;
         } finally {
-           jedis.close();
+            jedis.close();
         }
 
         return rtn;
     }
 
+    public static String emailKeyWrapper(String key) {
+        return String.format("email_%s", key);
+    }
+
     private static String getRedisKey(String key) {
-        return String.format("ssm_%s", key);
+        return String.format("user_%s", key);
     }
 }

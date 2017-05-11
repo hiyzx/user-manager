@@ -3,18 +3,27 @@ package com.zero.user.controller;
 import com.zero.enums.CodeEnum;
 import com.zero.exception.BaseException;
 import com.zero.po.User;
-import com.zero.user.dto.UserDto;
+import com.zero.user.vo.dto.UserDto;
 import com.zero.user.service.UserService;
 import com.zero.user.util.SessionHelper;
+import com.zero.util.MediaHelper;
+import com.zero.util.StringUtil;
 import com.zero.vo.BaseReturnVo;
 import com.zero.vo.ReturnVo;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.io.File;
+import java.util.UUID;
+
+import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 /**
  * @Description:
@@ -24,6 +33,7 @@ import javax.servlet.http.HttpServletRequest;
 @Controller
 public class UserController {
 
+    private static final Logger LOG = LoggerFactory.getLogger(UserController.class);
     @Resource
     private UserService userService;
 
@@ -69,4 +79,46 @@ public class UserController {
         return BaseReturnVo.success();
     }
 
+    @ResponseBody
+    @RequestMapping(value = "/bindEmail.json", method = RequestMethod.GET)
+    @ApiOperation("发送邮件-绑定")
+    public BaseReturnVo sendMail(@RequestParam String sessionId,
+            @ApiParam(value = "用户邮箱", required = true) @RequestParam String email) throws Exception {
+        Integer userId = SessionHelper.getUserId(sessionId);
+        userService.bindEmail(userId, email);
+        return BaseReturnVo.success();
+
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/validateEmail.json", method = RequestMethod.GET)
+    @ApiOperation("校验")
+    public ReturnVo<String> validateEmail(HttpServletRequest request,
+            @ApiParam(value = "key", required = true) @RequestParam String key) throws Exception {
+        int userId = userService.updateBindEmail(key);
+        String sessionId = request.getSession().getId();
+        SessionHelper.pushUserId(sessionId, userId);
+        return ReturnVo.success(sessionId);
+
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/uploadHeadImg.json", method = POST)
+    @ApiOperation(value = "上传头像")
+    public BaseReturnVo uploadMedia(@RequestParam String sessionId,
+            @RequestParam(value = "file", required = true) MultipartFile file) throws Exception {
+        String originalFileName = file.getOriginalFilename().replaceAll("\\s+", "");
+        Integer userId = SessionHelper.getUserId(sessionId);
+        String suffix = StringUtil.getSuffix(originalFileName);
+        String fileName = String.format("%s/%s-%s%s%s", "headImg", System.currentTimeMillis(), userId,
+                UUID.randomUUID().toString().substring(0, 5), suffix);
+        File targetFile = new File(MediaHelper.getMEDIA_PATH(), fileName);
+        if (!targetFile.exists()) {
+            targetFile.mkdirs();
+        }
+        file.transferTo(targetFile);
+        LOG.info("teacherId={} upload {} to {}", userId, originalFileName, targetFile.getAbsolutePath());
+        userService.updateHeadImg(userId, fileName);
+        return BaseReturnVo.success();
+    }
 }

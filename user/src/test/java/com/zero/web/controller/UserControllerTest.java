@@ -2,7 +2,7 @@ package com.zero.web.controller;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.zero.po.User;
-import com.zero.user.dto.UserDto;
+import com.zero.user.vo.dto.UserDto;
 import com.zero.user.service.UserService;
 import com.zero.user.util.SessionHelper;
 import com.zero.util.JsonUtil;
