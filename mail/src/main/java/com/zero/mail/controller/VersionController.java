@@ -24,7 +24,7 @@ public class VersionController {
     private String version;
     @Value("${project.buildTime}")
     private String builtAt;
-    @org.springframework.beans.factory.annotation.Value("${project.format}")
+    @Value("${project.format}")
     private String format;
 
     @ResponseBody
@@ -33,7 +33,7 @@ public class VersionController {
     public Map<String, String> version() throws ParseException {
         Map<String, String> map = new HashMap<String, String>();
         map.put("version", version);
-        map.put("builtAt", builtAt);
+        map.put("builtAt", DATE_FORMAT.get().format(new SimpleDateFormat(format).parse(builtAt)));
         return map;
     }
 }

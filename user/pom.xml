@@ -185,6 +185,7 @@
     </profiles>
 
     <build>
+        <!-- 要加这段才能在properties中读取到 -->
         <finalName>user</finalName>
         <resources>
             <resource>
@@ -198,7 +199,7 @@
         </resources>
         <plugins>
             <!-- 生成文档时使用 start -->
-            <plugin>
+            <!--<plugin>
                 <groupId>org.asciidoctor</groupId>
                 <artifactId>asciidoctor-maven-plugin</artifactId>
                 <version>1.5.3</version>
@@ -225,7 +226,7 @@
                         </configuration>
                     </execution>
                 </executions>
-            </plugin>
+            </plugin>-->
             <!-- 生成文档时使用 end -->
             <plugin>
                 <groupId>org.apache.tomcat.maven</groupId>
@@ -253,7 +254,7 @@
                             <warSourceExcludes>WEB-INF/lib/servlet-*</warSourceExcludes>
                             <webResources>
                                 <resource>
-                                    <directory>src/main/web/WEB-INF</directory>
+                                    <directory>src/main/webapp/WEB-INF</directory>
                                     <filtering>true</filtering>
                                     <targetPath>WEB-INF</targetPath>
                                     <includes>

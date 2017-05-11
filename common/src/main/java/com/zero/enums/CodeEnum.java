@@ -26,7 +26,12 @@ public enum CodeEnum {
 	/**
 	 * 登陆失败
 	 */
-	LOGIN_FAIL("100001");
+	LOGIN_FAIL("100001"),
+
+	/**
+	 * 邮件错误
+	 */
+	EMAIL_UN_CHECK("100002");
 
 	private CodeEnum(String value) {
 		this.CodeEnum = value;

@@ -1,4 +1,6 @@
-package com.zero.util;
+package com.zero.user.util;
+
+import com.zero.util.RedisHelper;
 
 /**
  * @Description:

@@ -146,6 +146,17 @@
         </dependency>
     </dependencies>
     <build>
+        <finalName>user</finalName>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+            <resource>
+                <directory>src/main/resources/${env}</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -163,7 +174,7 @@
                             <warSourceExcludes>WEB-INF/lib/servlet-*</warSourceExcludes>
                             <webResources>
                                 <resource>
-                                    <directory>src/main/web/WEB-INF</directory>
+                                    <directory>src/main/webapp/WEB-INF</directory>
                                     <filtering>true</filtering>
                                     <targetPath>WEB-INF</targetPath>
                                     <includes>

@@ -3,6 +3,11 @@
 */
 package com.zero.mail.util;
 
+import org.springframework.core.task.TaskExecutor;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
+
+import javax.annotation.Resource;
 import javax.mail.internet.MimeMessage;
 
 /**
@@ -10,37 +15,37 @@ import javax.mail.internet.MimeMessage;
  */
 public class MailUtil {
 
-    @javax.annotation.Resource
-    private org.springframework.mail.javamail.JavaMailSender javaMailSender;
+    @Resource
+    private JavaMailSender javaMailSender;
 
-    @javax.annotation.Resource
-    private org.springframework.mail.SimpleMailMessage simpleMailMessage;
+    @Resource
+    private SimpleMailMessage simpleMailMessage;
 
-    @javax.annotation.Resource
-    private org.springframework.core.task.TaskExecutor taskExecutor;
+    @Resource
+    private TaskExecutor taskExecutor;
 
     private class SendMailThread implements Runnable {
-        private String to;
+        private String receiver;
         private String subject;
         private String content;
 
-        private SendMailThread(String to, String subject, String content) {
+        private SendMailThread(String receiver, String subject, String content) {
             super();
-            this.to = to;
+            this.receiver = receiver;
             this.subject = subject;
             this.content = content;
         }
 
         public void run() {
-            sendMail(to, subject, content);
+            sendMail(receiver, subject, content);
         }
     }
 
     /**
      * 发送邮件-使用线程池
      */
-    public void sendMailThread(String to, String subject, String content) {
-        this.taskExecutor.execute(new SendMailThread(to, subject, content));
+    public void sendMailThread(String receiver, String subject, String content) {
+        this.taskExecutor.execute(new SendMailThread(receiver, subject, content));
     }
 
     /**
@@ -49,11 +54,12 @@ public class MailUtil {
     private void sendMail(String receiver, String subject, String content) {
         try {
             MimeMessage message = javaMailSender.createMimeMessage();
-            org.springframework.mail.javamail.MimeMessageHelper messageHelper = new org.springframework.mail.javamail.MimeMessageHelper(message, true, "UTF-8");
+            org.springframework.mail.javamail.MimeMessageHelper messageHelper = new org.springframework.mail.javamail.MimeMessageHelper(
+                    message, true, "UTF-8");
             messageHelper.setFrom(simpleMailMessage.getFrom());
             messageHelper.setSubject(subject);
             messageHelper.setTo(receiver);
-            messageHelper.setText(content, true);//支持html
+            messageHelper.setText(content, true);// 支持html
             javaMailSender.send(message);
         } catch (javax.mail.MessagingException e) {
             e.printStackTrace();

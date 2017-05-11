@@ -6,6 +6,7 @@ import com.zero.exception.BaseException;
 import com.zero.po.User;
 import com.zero.po.UserExample;
 import com.zero.user.dto.UserDto;
+import com.zero.user.util.RegexUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -46,7 +47,11 @@ public class UserService {
         return user;
     }
 
-    public int add(UserDto userDto) throws IOException {
+    public int add(UserDto userDto) throws IOException, BaseException {
+        String email = userDto.getEmail();
+        if (!RegexUtil.checkEmail(email)) {
+            throw new BaseException(CodeEnum.EMAIL_UN_CHECK, "邮件错误!");
+        }
         User tmp = new User();
         tmp.setAge(userDto.getAge());
         String name = userDto.getName();
@@ -54,7 +59,6 @@ public class UserService {
         tmp.setPassword(userDto.getPassword());
         String phone = userDto.getPhone();
         tmp.setPhone(phone);
-        String email = userDto.getEmail();
         tmp.setEmail(email);
         userMapper.insertSelective(tmp);
         mailService.sendMail(email, "注册邮件", String.format("<h1>%s注册成功!</h1>", name));
