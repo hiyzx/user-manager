@@ -3,6 +3,8 @@ package com.zero.mail.service;
 import com.zero.mail.util.MailUtil;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
+
 /**
  * @Description:
  * @author: yezhaoxing
@@ -11,7 +13,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class MailService {
 
-    @javax.annotation.Resource
+    @Resource
     private MailUtil mailUtil;
 
     public void sendMail(String receiver, String title, String content) {

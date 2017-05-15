@@ -14,7 +14,7 @@
     </modules>
     <packaging>pom</packaging>
 
-    <repositories>
+    <!--<repositories>
         <repository>
             <id>public</id>
             <url>http://10.0.1.56:8080/content/groups/public/</url>
@@ -37,7 +37,7 @@
                 <enabled>true</enabled>
             </snapshots>
         </pluginRepository>
-    </pluginRepositories>
+    </pluginRepositories>-->
     <properties>
         <spring-version>4.3.2.RELEASE</spring-version>
         <spring-security-version>4.0.2.RELEASE</spring-security-version>
@@ -131,6 +131,11 @@
             <dependency>
                 <groupId>org.springframework</groupId>
                 <artifactId>spring-context-support</artifactId>
+                <version>${spring-version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-jms</artifactId>
                 <version>${spring-version}</version>
             </dependency>
             <dependency>
@@ -256,6 +261,18 @@
                 <artifactId>commons-fileupload</artifactId>
                 <version>1.3.1</version>
             </dependency>
+
+            <dependency>
+                <groupId>org.apache.activemq</groupId>
+                <artifactId>activemq-all</artifactId>
+                <version>5.11.1</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.activemq</groupId>
+                <artifactId>activemq-pool</artifactId>
+                <version>5.11.1</version>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
     <build>

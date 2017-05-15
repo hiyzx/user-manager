@@ -11,6 +11,7 @@ import com.zero.user.vo.dto.UserDto;
 import com.zero.util.JsonUtil;
 import com.zero.util.MediaHelper;
 import com.zero.util.RedisHelper;
+import com.zero.vo.MailVo;
 import org.apache.poi.ss.usermodel.IndexedColors;
 import org.apache.poi.xssf.usermodel.*;
 import org.slf4j.Logger;
@@ -36,8 +37,9 @@ public class UserService {
     @Resource
     private UserMapper userMapper;
     @Resource
-    private MailService mailService;
-    private static final String HOST = "localhost";
+    private ActiveMqService activeMqService;
+    //private MailService mailService;
+    private static final String HOST = "http://localhost";
     private static final String PORT = "8080";
     private static final String URI = "/user/validateEmail.json";
 
@@ -93,7 +95,12 @@ public class UserService {
         String redisKey = RedisHelper.emailKeyWrapper(key);
         RedisHelper.set(redisKey, JsonUtil.toJSon(tmp));
         RedisHelper.expire(redisKey, EMAIL_EXPIRE_TIME);
-        mailService.sendMail(email, "绑定邮箱", String.format("点击<a>%s:%s%s%s%s</a>完成绑定", HOST, PORT, URI, "?key=", key));
+        //mailService.sendMail(email, "绑定邮箱", String.format("点击<a>%s:%s%s%s%s</a>完成绑定", HOST, PORT, URI, "?key=", key));
+        MailVo mailVo = new MailVo();
+        mailVo.setTo(email);
+        mailVo.setTitle("绑定邮箱");
+        mailVo.setContent(String.format("点击<a>%s:%s%s%s%s</a>完成绑定", HOST, PORT, URI, "?key=", key));
+        activeMqService.sendMessage(mailVo);
     }
 
     public int updateBindEmail(String key) throws Exception {
