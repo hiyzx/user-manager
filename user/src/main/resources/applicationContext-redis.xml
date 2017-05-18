@@ -3,7 +3,7 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans 
 						http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
 	<bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-		<property name="location" value="classpath:dev/redis.properties" />
+		<property name="location" value="classpath:redis.properties" />
 	</bean>
 	<!-- 配置redis连接池start -->
 	<bean id="redisPoolConfig" class="redis.clients.jedis.JedisPoolConfig">

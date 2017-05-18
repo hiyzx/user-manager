@@ -179,19 +179,6 @@
 
     </dependencies>
 
-    <profiles>
-        <!-- 开发环境，默认激活 -->
-        <profile>
-            <id>dev</id>
-            <properties>
-                <env>dev</env>
-            </properties>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
-        </profile>
-    </profiles>
-
     <build>
         <!-- 要加这段才能在properties中读取到 -->
         <finalName>user</finalName>

@@ -2,9 +2,7 @@ package com.zero.user.util;
 
 import java.io.IOException;
 import java.io.InterruptedIOException;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.net.UnknownHostException;
+import java.net.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -42,6 +40,8 @@ import org.apache.http.util.EntityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.StringUtils;
+
+import com.zero.vo.HealthCheckVo;
 
 /**
  * @see https://yq.aliyun.com/articles/294
@@ -299,5 +299,28 @@ public class HttpClient {
     URI createURIBuilder(String path) throws URISyntaxException {
         Map<String, String> params = Collections.emptyMap();
         return createURIBuilder(path, params);
+    }
+
+    public HealthCheckVo healthCheck() {
+        HealthCheckVo healthCheckVo = new HealthCheckVo();
+        healthCheckVo.setServiceName(String.format("%s:%s", hostname, port));
+        try {
+            healthCheckVo.setNormal(true);
+            healthCheckVo.setCostTime(String.format("%sms", checkHttpConnection(hostname, port)));
+        } catch (IOException e) {
+            healthCheckVo.setNormal(false);
+            LOG.error("hostname={} port={}", hostname, port, e);
+        }
+        return healthCheckVo;
+    }
+
+    private static long checkHttpConnection(final String hostname, final int port) throws IOException {
+        long startTimeMillis = System.currentTimeMillis();
+        Socket server = null;
+        server = new Socket();
+        InetSocketAddress address = new InetSocketAddress(hostname, port);
+        server.connect(address, 300000);// 5分钟
+        server.close();
+        return System.currentTimeMillis() - startTimeMillis;
     }
 }

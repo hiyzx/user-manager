@@ -1,7 +1,12 @@
 package com.zero.util;
 
+import com.zero.vo.HealthCheckVo;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import redis.clients.jedis.ShardedJedis;
 import redis.clients.jedis.ShardedJedisPool;
+
+import java.util.Date;
 
 /**
  * @Description:
@@ -9,6 +14,7 @@ import redis.clients.jedis.ShardedJedisPool;
  * @date: 2017/5/3
  */
 public class RedisHelper {
+    private static final Logger LOG = LoggerFactory.getLogger(RedisHelper.class);
     private static org.springframework.context.ApplicationContext context;
     private static ShardedJedisPool pool;
 
@@ -98,5 +104,21 @@ public class RedisHelper {
 
     private static String getRedisKey(String key) {
         return String.format("user_%s", key);
+    }
+
+    public static HealthCheckVo checkRedisConnection() {
+        HealthCheckVo healthCheckVo = new HealthCheckVo();
+        healthCheckVo.setServiceName("redis");
+        try {
+            long startTimeMillis = System.currentTimeMillis();
+            RedisHelper.set(String.format("%scheckRedisConnection", getRedisKey("")),
+                    DateUtil.format(new Date(startTimeMillis), "yyyy-MM-dd HH:mm:ss"));
+            healthCheckVo.setNormal(true);
+            healthCheckVo.setCostTime(String.format("%sms", System.currentTimeMillis() - startTimeMillis));
+        } catch (Exception e) {
+            LOG.error(e.getMessage(), e);
+            healthCheckVo.setNormal(false);
+        }
+        return healthCheckVo;
     }
 }
