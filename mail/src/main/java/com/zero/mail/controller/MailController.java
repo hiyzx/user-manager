@@ -24,7 +24,7 @@ public class MailController {
 
     @ResponseBody
     @RequestMapping(value = "/sendMail.json", method = RequestMethod.POST)
-    @ApiOperation("send")
+    @ApiOperation("发送邮件")
     public BaseReturnVo sendMail(@RequestParam String receiver, @RequestParam String title,
             @RequestParam String content) {
         mailService.sendMail(receiver, title, content);

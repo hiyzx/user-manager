@@ -6,6 +6,7 @@ package com.zero.mail.util;
 import org.springframework.core.task.TaskExecutor;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 
 import javax.annotation.Resource;
 import javax.mail.internet.MimeMessage;
@@ -17,10 +18,8 @@ public class MailUtil {
 
     @Resource
     private JavaMailSender javaMailSender;
-
     @Resource
     private SimpleMailMessage simpleMailMessage;
-
     @Resource
     private TaskExecutor taskExecutor;
 
@@ -54,8 +53,7 @@ public class MailUtil {
     private void sendMail(String receiver, String subject, String content) {
         try {
             MimeMessage message = javaMailSender.createMimeMessage();
-            org.springframework.mail.javamail.MimeMessageHelper messageHelper = new org.springframework.mail.javamail.MimeMessageHelper(
-                    message, true, "UTF-8");
+            MimeMessageHelper messageHelper = new MimeMessageHelper(message, true, "UTF-8");
             messageHelper.setFrom(simpleMailMessage.getFrom());
             messageHelper.setSubject(subject);
             messageHelper.setTo(receiver);

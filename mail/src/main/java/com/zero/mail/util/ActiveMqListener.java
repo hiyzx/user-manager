@@ -20,7 +20,6 @@ import javax.jms.TextMessage;
 public class ActiveMqListener implements SessionAwareMessageListener<Message> {
 
     private static final Logger LOG = LoggerFactory.getLogger(ActiveMqListener.class);
-
     @Resource
     private JmsTemplate jmsTemplate;
     @Resource
@@ -38,7 +37,6 @@ public class ActiveMqListener implements SessionAwareMessageListener<Message> {
         try {
             // 执行发送业务
             mailUtil.sendMailThread(mail.getTo(), mail.getTitle(), mail.getContent());
-
         } catch (Exception e) {
             // 发送异常，重新放回队列
             jmsTemplate.send(new MessageCreator() {
