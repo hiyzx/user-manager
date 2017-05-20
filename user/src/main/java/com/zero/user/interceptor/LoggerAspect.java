@@ -21,7 +21,7 @@ import java.util.Map;
 
 /**
  * http://blog.csdn.net/xiaoxian8023/article/details/17285809<br/>
- * 
+ *
  * @Description: 全局日志类
  */
 @Aspect
@@ -116,9 +116,11 @@ public class LoggerAspect {
         map.put("app_name", log.appName());
         map.put("app_type", "web");
         map.put("class_name", target.toString());
+        map.put("targetName", targetName);
         map.put("function_name", method);
         map.put("use_time", String.valueOf(clock.getTotalTimeMillis()));
-        AsyncHttpClient.postTraceData(postTraceDataUrl, map);// 异步数据上报接口
+        AsyncHttpClient.postTraceData(map);// 异步数据上报接口
+	    Thread.sleep(20000);
         return result;
     }
 }
