@@ -1,4 +1,4 @@
-package com.zero.user.service;
+package com.zero.mail.service;
 
 import com.zero.util.JsonUtil;
 import com.zero.vo.MailVo;
@@ -20,10 +20,14 @@ public class ActiveMqService {
     @Resource
     private JmsTemplate jmsTemplate;
 
-    public void sendMessage(final MailVo mailVo) {
+    public void sendToMQ(final String receiver, final String title, final String content) {
         jmsTemplate.send(new MessageCreator() {
             @Override
             public Message createMessage(Session session) throws JMSException {
+                MailVo mailVo = new MailVo();
+                mailVo.setTo(receiver);
+                mailVo.setTitle(title);
+                mailVo.setContent(content);
                 return session.createTextMessage(JsonUtil.toJSon(mailVo));
             }
         });

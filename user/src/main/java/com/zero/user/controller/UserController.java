@@ -3,6 +3,7 @@ package com.zero.user.controller;
 import com.zero.enums.CodeEnum;
 import com.zero.exception.BaseException;
 import com.zero.po.User;
+import com.zero.user.annotation.AopCutAnnotation;
 import com.zero.user.vo.dto.UserDto;
 import com.zero.user.service.UserService;
 import com.zero.user.util.SessionHelper;
@@ -47,6 +48,7 @@ public class UserController {
         return ReturnVo.success(sessionId);
     }
 
+    @AopCutAnnotation
     @ResponseBody
     @RequestMapping(value = "/login.json", method = RequestMethod.POST)
     @ApiOperation("登陆")

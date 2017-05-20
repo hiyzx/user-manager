@@ -1,19 +1,22 @@
 package com.zero.user.interceptor;
 
 import com.zero.exception.BaseException;
+import com.zero.user.annotation.AopCutAnnotation;
+import com.zero.user.util.AsyncHttpClient;
 import com.zero.user.util.SessionHelper;
 import com.zero.util.JsonUtil;
 import org.aspectj.lang.JoinPoint;
-import org.aspectj.lang.annotation.AfterReturning;
-import org.aspectj.lang.annotation.AfterThrowing;
-import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Pointcut;
+import org.aspectj.lang.ProceedingJoinPoint;
+import org.aspectj.lang.annotation.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.util.StopWatch;
 import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -24,6 +27,8 @@ import java.util.Map;
 @Aspect
 public class LoggerAspect {
     private static final Logger LOG = LoggerFactory.getLogger(LoggerAspect.class);
+    @Value("${post.trace.data}")
+    private String postTraceDataUrl;
     private static final String HOSTNAME = com.zero.user.util.IpUtil
             .getHostName(com.zero.user.util.IpUtil.getInetAddress());
     @Resource
@@ -92,5 +97,28 @@ public class LoggerAspect {
             sb.append("]");
         }
         return sb;
+    }
+
+    @Around(value = "execution(* com.zero.user.controller.*.*(..)) && @annotation(log)")
+    public Object doAround(ProceedingJoinPoint pjp, AopCutAnnotation log) throws Throwable {
+        StopWatch clock = new StopWatch();
+        clock.start();
+        // 调用的方法名
+        String method = pjp.getSignature().getName();
+        // 获取目标对象(形如：com.action.admin.LoginAction@1a2467a)
+        Object target = pjp.getTarget();
+        // 获取目标对象的类名(形如：com.action.admin.LoginAction)
+        String targetName = pjp.getTarget().getClass().getName();
+        // 执行完方法的返回值：调用proceed()方法，就会触发切入点方法执行
+        Object result = pjp.proceed();// result的值就是被拦截方法的返回值
+        clock.stop();
+        Map<String, String> map = new HashMap<>();
+        map.put("app_name", log.appName());
+        map.put("app_type", "web");
+        map.put("class_name", target.toString());
+        map.put("function_name", method);
+        map.put("use_time", String.valueOf(clock.getTotalTimeMillis()));
+        AsyncHttpClient.postTraceData(postTraceDataUrl, map);// 异步数据上报接口
+        return result;
     }
 }
