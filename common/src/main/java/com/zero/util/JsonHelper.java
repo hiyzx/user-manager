@@ -5,9 +5,9 @@ package com.zero.util;
  * json字符与对像转换
  * 
  */
-public final class JsonUtil {
+public final class JsonHelper {
 
-    private static final org.slf4j.Logger LOG = org.slf4j.LoggerFactory.getLogger(JsonUtil.class);
+    private static final org.slf4j.Logger LOG = org.slf4j.LoggerFactory.getLogger(JsonHelper.class);
     public static com.fasterxml.jackson.databind.ObjectMapper objectMapper;
 
     /**

@@ -1,6 +1,6 @@
 package com.zero.mail.service;
 
-import com.zero.util.JsonUtil;
+import com.zero.util.JsonHelper;
 import com.zero.vo.MailVo;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.jms.core.MessageCreator;
@@ -28,7 +28,7 @@ public class ActiveMqService {
                 mailVo.setTo(receiver);
                 mailVo.setTitle(title);
                 mailVo.setContent(content);
-                return session.createTextMessage(JsonUtil.toJSon(mailVo));
+                return session.createTextMessage(JsonHelper.toJSon(mailVo));
             }
         });
     }

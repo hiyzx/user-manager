@@ -15,8 +15,8 @@ import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Locale;
 
-public final class DateUtil {
-    public DateUtil() {
+public final class DateHelper {
+    public DateHelper() {
     }
 
     public static Timestamp strToTimestamp(String time) {

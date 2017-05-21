@@ -5,7 +5,7 @@ import com.zero.po.User;
 import com.zero.user.vo.dto.UserDto;
 import com.zero.user.service.UserService;
 import com.zero.user.util.SessionHelper;
-import com.zero.util.JsonUtil;
+import com.zero.util.JsonHelper;
 import com.zero.vo.ReturnVo;
 import org.junit.Assert;
 import org.junit.Before;
@@ -40,7 +40,7 @@ public class UserControllerTest {
     protected MockMvc mockMvc;
     private static final String NAME = "zero";
     private static final String PHONE = "188";
-    private static final String SESSION_ID = "sessionId";
+    private String SESSION_ID;
     private Integer userId;
     @Resource
     private UserService userService;
@@ -54,7 +54,7 @@ public class UserControllerTest {
         tmp.setPassword("abc");
         tmp.setAge(12);
         userId = userService.add(tmp);
-        SessionHelper.pushUserId(SESSION_ID, userId);
+        SESSION_ID = SessionHelper.createSessionId(userId);
     }
 
     @Test
@@ -65,7 +65,7 @@ public class UserControllerTest {
                 .andExpect(status().isOk()).andDo(print()).andReturn().getResponse().getContentAsString();
         final TypeReference<ReturnVo<User>> REFERENCE = new TypeReference<ReturnVo<User>>() {
         };
-        ReturnVo<User> userReturnVo = JsonUtil.readValue(responseString, REFERENCE);
+        ReturnVo<User> userReturnVo = JsonHelper.readValue(responseString, REFERENCE);
         Assert.assertEquals(userReturnVo.getData().getName(), NAME);
         Assert.assertEquals(userReturnVo.getData().getId(), userId);
     }

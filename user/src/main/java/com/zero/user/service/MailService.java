@@ -2,7 +2,7 @@ package com.zero.user.service;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.zero.user.util.HttpClient;
-import com.zero.util.JsonUtil;
+import com.zero.util.JsonHelper;
 import com.zero.vo.BaseReturnVo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,7 +36,7 @@ public class MailService {
         final TypeReference<BaseReturnVo> REFERENCE = new TypeReference<BaseReturnVo>() {
         };
         LOG.info("request api cost time={}", System.currentTimeMillis() - startTime);
-        BaseReturnVo returnVo = JsonUtil.readValue(response, REFERENCE);
+        BaseReturnVo returnVo = JsonHelper.readValue(response, REFERENCE);
         if (STATUS_SUCCESS_CODE.equals(returnVo.getResCode())) {
             LOG.info("send email to receiver={} success", receiver);
             return true;

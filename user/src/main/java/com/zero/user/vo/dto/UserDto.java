@@ -1,21 +1,26 @@
 package com.zero.user.vo.dto;
 
+import io.swagger.annotations.ApiModelProperty;
+
 /**
  * Created by HP on 2017/4/30.
  */
 public class UserDto {
 
-    @io.swagger.annotations.ApiModelProperty(value = "年龄")
+    @ApiModelProperty(value = "年龄")
     private Integer age;
 
-    @io.swagger.annotations.ApiModelProperty(value = "名字")
+    @ApiModelProperty(value = "名字")
     private String name;
 
-    @io.swagger.annotations.ApiModelProperty(value = "手机号")
+    @ApiModelProperty(value = "手机号")
     private String phone;
 
-    @io.swagger.annotations.ApiModelProperty(value = "密码")
+    @ApiModelProperty(value = "密码")
     private String password;
+
+    @ApiModelProperty(value = "图形验证码")
+    private String verifyCode;
 
     public Integer getAge() {
         return age;
@@ -47,5 +52,13 @@ public class UserDto {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getVerifyCode() {
+        return verifyCode;
+    }
+
+    public void setVerifyCode(String verifyCode) {
+        this.verifyCode = verifyCode;
     }
 }

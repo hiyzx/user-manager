@@ -1,6 +1,6 @@
 package com.zero.mail.controller;
 
-import com.zero.util.JsonUtil;
+import com.zero.util.JsonHelper;
 import com.zero.vo.BaseReturnVo;
 import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
@@ -28,7 +28,7 @@ public class LogController {
     @ApiOperation("获取请求数据")
     public BaseReturnVo sendMail(@RequestBody Map<String, String> requestData) throws InterruptedException {
 	    Thread.sleep(10000);
-        LOG.info(JsonUtil.toJSon(requestData));
+        LOG.info(JsonHelper.toJSon(requestData));
         return BaseReturnVo.success();
     }
 }

@@ -8,7 +8,7 @@ import com.zero.po.UserExample;
 import com.zero.user.util.RegexUtil;
 import com.zero.user.vo.BindEmailVo;
 import com.zero.user.vo.dto.UserDto;
-import com.zero.util.JsonUtil;
+import com.zero.util.JsonHelper;
 import com.zero.util.MediaHelper;
 import com.zero.util.RedisHelper;
 import org.apache.poi.ss.usermodel.IndexedColors;
@@ -92,7 +92,7 @@ public class UserService {
         tmp.setEmail(email);
         String key = UUID.randomUUID().toString();
         String redisKey = RedisHelper.emailKeyWrapper(key);
-        RedisHelper.set(redisKey, JsonUtil.toJSon(tmp));
+        RedisHelper.set(redisKey, JsonHelper.toJSon(tmp));
         RedisHelper.expire(redisKey, EMAIL_EXPIRE_TIME);
         mailService.sendMail(email, "绑定邮箱", String.format("点击<a>%s:%s%s%s%s</a>完成绑定", HOST, PORT, URI, "?key=", key));
         // MailVo mailVo = new MailVo();
@@ -105,7 +105,7 @@ public class UserService {
 
     public int updateBindEmail(String key) throws Exception {
         String redisKey = RedisHelper.emailKeyWrapper(key);
-        BindEmailVo bindEmailVo = JsonUtil.readValue(RedisHelper.get(redisKey), BindEmailVo.class);
+        BindEmailVo bindEmailVo = JsonHelper.readValue(RedisHelper.get(redisKey), BindEmailVo.class);
         if (bindEmailVo != null) {
             User tmp = new User();
             int userId = bindEmailVo.getUserId();

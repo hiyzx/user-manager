@@ -1,6 +1,6 @@
 package com.zero.mail.util;
 
-import com.zero.util.JsonUtil;
+import com.zero.util.JsonHelper;
 import com.zero.vo.MailVo;
 import org.apache.activemq.Message;
 import org.slf4j.Logger;
@@ -30,7 +30,7 @@ public class ActiveMqListener implements SessionAwareMessageListener<Message> {
         final String msg = textMessage.getText();
         System.out.println("收到消息：" + msg);
         // 转换成相应的对象
-        MailVo mail = JsonUtil.readValue(msg, MailVo.class);
+        MailVo mail = JsonHelper.readValue(msg, MailVo.class);
         if (mail == null) {
             return;
         }
@@ -42,7 +42,7 @@ public class ActiveMqListener implements SessionAwareMessageListener<Message> {
             jmsTemplate.send(new MessageCreator() {
                 @Override
                 public javax.jms.Message createMessage(Session session) throws JMSException {
-                    return session.createTextMessage(JsonUtil.toJSon(msg));
+                    return session.createTextMessage(JsonHelper.toJSon(msg));
                 }
             });
             LOG.error(e.getMessage());

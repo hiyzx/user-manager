@@ -35,7 +35,17 @@ public enum CodeEnum {
     /**
      * 绑定失败
      */
-    BIND_EMAIL_FAIL("100003");
+    BIND_EMAIL_FAIL("100003"),
+
+    /**
+     * 验证码已经失效
+     */
+    VERIFY_CODE_EXPIRE("100004"),
+
+    /**
+     * 验证码已经错误
+     */
+    VERIFY_CODE_WRONG("100004");
 
     private CodeEnum(String value) {
         this.CodeEnum = value;

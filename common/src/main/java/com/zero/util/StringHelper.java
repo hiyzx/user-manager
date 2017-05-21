@@ -5,7 +5,7 @@ package com.zero.util;
  * @author: yezhaoxing
  * @date: 2017/5/11
  */
-public class StringUtil {
+public class StringHelper {
 
     public static String getSuffix(String originalFileName) {
         final String SEPARATOR = ".";

@@ -3,6 +3,7 @@ package com.zero.util;
 import com.zero.vo.HealthCheckVo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 import redis.clients.jedis.ShardedJedis;
 import redis.clients.jedis.ShardedJedisPool;
 
@@ -20,8 +21,7 @@ public class RedisHelper {
 
     static {
         try {
-            context = new org.springframework.context.support.ClassPathXmlApplicationContext(
-                    "applicationContext-redis.xml");
+            context = new ClassPathXmlApplicationContext("applicationContext-redis.xml");
         } catch (Exception var1) {
             throw new IllegalArgumentException("applicationContext-redis.xml没有被找到");
         }
@@ -112,7 +112,7 @@ public class RedisHelper {
         try {
             long startTimeMillis = System.currentTimeMillis();
             RedisHelper.set(String.format("%scheckRedisConnection", getRedisKey("")),
-                    DateUtil.format(new Date(startTimeMillis), "yyyy-MM-dd HH:mm:ss"));
+                    DateHelper.format(new Date(startTimeMillis), "yyyy-MM-dd HH:mm:ss"));
             healthCheckVo.setNormal(true);
             healthCheckVo.setCostTime(String.format("%sms", System.currentTimeMillis() - startTimeMillis));
         } catch (Exception e) {

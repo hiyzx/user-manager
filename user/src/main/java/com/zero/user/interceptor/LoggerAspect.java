@@ -4,7 +4,7 @@ import com.zero.exception.BaseException;
 import com.zero.user.annotation.AopCutAnnotation;
 import com.zero.user.util.AsyncHttpClient;
 import com.zero.user.util.SessionHelper;
-import com.zero.util.JsonUtil;
+import com.zero.util.JsonHelper;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.*;
@@ -54,7 +54,7 @@ public class LoggerAspect {
     @AfterReturning(value = "logController()", returning = "returnValue")
     public void afterReturning(JoinPoint joinPoint, Object returnValue) {
         try {
-            LOG.info("{} || request={} || response={}", HOSTNAME, parseRequest(), JsonUtil.toJSon(returnValue));
+            LOG.info("{} || request={} || response={}", HOSTNAME, parseRequest(), JsonHelper.toJSon(returnValue));
         } catch (Exception e) {
             LOG.error(e.getMessage(), e);
         }

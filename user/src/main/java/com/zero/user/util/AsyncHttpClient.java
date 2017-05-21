@@ -1,6 +1,6 @@
 package com.zero.user.util;
 
-import com.zero.util.JsonUtil;
+import com.zero.util.JsonHelper;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.HttpPost;
@@ -34,7 +34,7 @@ public class AsyncHttpClient {
             client = HttpAsyncClients.custom().setDefaultRequestConfig(requestConfig).build();
             client.start();
             final HttpPost request = new HttpPost(url);
-            request.setEntity(new StringEntity(JsonUtil.toJSon(params), UTF_8));
+            request.setEntity(new StringEntity(JsonHelper.toJSon(params), UTF_8));
             request.setHeader("Content-type", APPLICATION_STRING);
             // 请求接口并返回
             client.execute(request, new FutureCallback<HttpResponse>() {
