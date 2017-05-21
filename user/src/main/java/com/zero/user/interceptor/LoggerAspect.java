@@ -119,8 +119,8 @@ public class LoggerAspect {
         map.put("targetName", targetName);
         map.put("function_name", method);
         map.put("use_time", String.valueOf(clock.getTotalTimeMillis()));
-        AsyncHttpClient.postTraceData(map);// 异步数据上报接口
-	    Thread.sleep(20000);
+        AsyncHttpClient.postTraceData(postTraceDataUrl, map);// 异步数据上报接口
+        Thread.sleep(20000);
         return result;
     }
 }
