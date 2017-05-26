@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
+    <!-- 本文件只存放自定义的bean -->
+    <bean class="com.zero.util.MediaHelper">
+        <constructor-arg name="mediaPath" value="${upload.path}"/>
+        <constructor-arg name="mediaHost" value="${upload.host}"/>
+    </bean>
+
+    <bean id="mailHttpClient" class="com.zero.user.util.HttpClient">
+        <constructor-arg name="scheme" value="${mail.scheme}"/>
+        <constructor-arg name="hostname" value="${mail.hostname}"/>
+        <constructor-arg name="port" value="${mail.port}"/>
+        <constructor-arg name="authorizationValue" value="${mail.authorizationValue}"/>
+    </bean>
+
+    <!-- 配置redis连接池 -->
+    <bean id="redisPoolConfig" class="redis.clients.jedis.JedisPoolConfig">
+        <property name="maxTotal" value="${redis.pool.maxTotal}" />
+        <property name="maxIdle" value="${redis.pool.maxIdle}" />
+        <property name="minIdle" value="${redis.pool.minIdle}" />
+        <property name="maxWaitMillis" value="${redis.pool.maxWaitMillis}" />
+        <property name="testOnBorrow" value="${redis.pool.testOnBorrow}" />
+        <property name="testOnReturn" value="${redis.pool.testOnReturn}" />
+    </bean>
+</beans>

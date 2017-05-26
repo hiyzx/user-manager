@@ -4,7 +4,6 @@ import com.zero.enums.CodeEnum;
 import com.zero.exception.BaseException;
 import com.zero.po.User;
 import com.zero.user.service.UserService;
-import com.zero.user.service.VerifyCodeService;
 import com.zero.user.util.SessionHelper;
 import com.zero.user.vo.dto.UserDto;
 import com.zero.util.Constant;
@@ -41,8 +40,6 @@ public class UserController {
     private static final Logger LOG = LoggerFactory.getLogger(UserController.class);
     @Resource
     private UserService userService;
-    @Resource
-    private VerifyCodeService verifyCodeService;
 
     @RequestMapping(value = "/authImage", method = RequestMethod.GET)
     @ApiOperation("生成图形验证码")
@@ -62,8 +59,8 @@ public class UserController {
     @RequestMapping(value = "/register.json", method = RequestMethod.POST)
     @ApiOperation("注册")
     public ReturnVo<String> register(HttpServletRequest request, @RequestBody UserDto userDto) throws Exception {
-        Object redisKey = request.getSession().getAttribute(Constant.USER_VERIFY_CODE_KEY);
-        verifyCodeService.checkVerifyCode(redisKey, userDto.getVerifyCode());
+        String redisKey = (String) request.getSession().getAttribute(Constant.USER_VERIFY_CODE_KEY);
+        StringHelper.checkVerifyCode(redisKey, userDto.getVerifyCode());
         request.getSession().removeAttribute(Constant.USER_VERIFY_CODE_KEY);
         int userId = userService.add(userDto);
         String sessionId = SessionHelper.createSessionId(userId);

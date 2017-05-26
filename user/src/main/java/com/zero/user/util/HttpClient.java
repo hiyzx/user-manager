@@ -55,7 +55,6 @@ public class HttpClient {
     private static final String AUTHORIZATION_KEY = "Authorization";
     private final String authorizationValue;
     private final RequestConfig requestConfig;
-
     private final String scheme;
     private final String hostname;
     private final int port;

@@ -38,7 +38,7 @@ public class ActiveMqListener implements SessionAwareMessageListener<Message> {
             // 执行发送业务
             mailUtil.sendMailThread(mail.getTo(), mail.getTitle(), mail.getContent());
         } catch (Exception e) {
-            // 发送异常，重新放回队列
+            // 发生异常，重新放回队列
             jmsTemplate.send(new MessageCreator() {
                 @Override
                 public javax.jms.Message createMessage(Session session) throws JMSException {

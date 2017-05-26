@@ -1,8 +1,6 @@
 package com.zero.user.controller;
 
 import com.zero.user.service.HealthCheckService;
-import com.zero.user.util.HttpClient;
-import com.zero.util.RedisHelper;
 import com.zero.vo.HealthCheckVo;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Value;
@@ -13,7 +11,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.annotation.Resource;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -33,9 +30,6 @@ public class HealthCheckController {
     private String builtAt;
     @Value("${project.format}")
     private String format;
-
-    @Resource
-    private HttpClient mailHttpClient;
     @Resource
     private HealthCheckService healthCheckService;
 
@@ -52,11 +46,7 @@ public class HealthCheckController {
     @ResponseBody
     @RequestMapping(value = "/healthCheck", method = GET)
     public List<HealthCheckVo> healthCheck() throws ParseException {
-        List<HealthCheckVo> healthCheckVos = new ArrayList<>();
-        healthCheckVos.add(mailHttpClient.healthCheck());
-        healthCheckVos.add(RedisHelper.checkRedisConnection());
-        healthCheckVos.add(healthCheckService.checkDBConnection());
-        return healthCheckVos;
+        return healthCheckService.healthCheck();
     }
 
 }

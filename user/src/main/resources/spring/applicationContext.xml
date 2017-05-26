@@ -53,13 +53,10 @@
     <tx:advice id="txAdvice" transaction-manager="transactionManager">
         <tx:attributes>
             <tx:method name="save*" propagation="REQUIRED" isolation="DEFAULT" read-only="false"/>
-            <tx:method name="register*" propagation="REQUIRED" isolation="DEFAULT" read-only="false"/>
             <tx:method name="add*" propagation="REQUIRED" isolation="DEFAULT" read-only="false"/>
             <tx:method name="update*" propagation="REQUIRED" isolation="DEFAULT" read-only="false"/>
             <tx:method name="delete*" propagation="REQUIRED" isolation="DEFAULT" read-only="false"/>
             <tx:method name="get*" propagation="REQUIRED" isolation="DEFAULT" read-only="true"/>
-            <tx:method name="load*" propagation="REQUIRED" isolation="DEFAULT" read-only="true"/>
-            <tx:method name="find*" propagation="REQUIRED" isolation="DEFAULT" read-only="true"/>
             <tx:method name="*" propagation="REQUIRED" isolation="DEFAULT" read-only="true"/>
         </tx:attributes>
     </tx:advice>
@@ -73,27 +70,8 @@
     <!-- 扫描目录 -->
     <context:component-scan base-package="com.zero.user.service"/>
 
-    <bean class="com.zero.util.MediaHelper">
-        <constructor-arg name="mediaPath" value="${upload.path}"/>
-        <constructor-arg name="mediaHost" value="${upload.host}"/>
-    </bean>
-
-    <bean id="mailHttpClient" class="com.zero.user.util.HttpClient">
-        <constructor-arg name="scheme" value="${mail.scheme}"/>
-        <constructor-arg name="hostname" value="${mail.hostname}"/>
-        <constructor-arg name="port" value="${mail.port}"/>
-        <constructor-arg name="authorizationValue" value="${mail.authorizationValue}"/>
-    </bean>
-
     <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
         <property name="maxUploadSize" value="1024000000"/>
-    </bean>
-
-    <bean id="config" class="redis.clients.jedis.JedisPoolConfig">
-        <property name="maxTotal" value="${redis.pool.maxTotal}"/>
-        <property name="maxIdle" value="${redis.pool.maxIdle}"/>
-        <property name="maxWaitMillis" value="${redis.pool.maxWaitMillis}"/>
-        <property name="testOnBorrow" value="${redis.pool.testOnBorrow}"/>
     </bean>
 
     <!-- Spring-redis连接池管理工厂 -->
@@ -103,14 +81,12 @@
         <property name="port" value="${redis.port}"/>
         <property name="password" value="${redis.password}"/>
         <property name="timeout" value="${redis.timeout}"/>
-        <property name="poolConfig" ref="config"/>
+        <property name="poolConfig" ref="redisPoolConfig"/>
     </bean>
     <!-- spring集成session的配置 -->
     <bean id="redisTemplate" class="org.springframework.data.redis.core.RedisTemplate">
         <property name="connectionFactory" ref="connectionFactory"/>
     </bean>
-
-
     <!-- 使用spring-session把http session放到redis里 -->
     <bean id="redisHttpSessionConfiguration"
           class="org.springframework.session.data.redis.config.annotation.web.http.RedisHttpSessionConfiguration">

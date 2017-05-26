@@ -2,6 +2,8 @@ package com.zero.mail.service;
 
 import com.zero.util.JsonHelper;
 import com.zero.vo.MailVo;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.jms.core.MessageCreator;
 import org.springframework.stereotype.Service;
@@ -17,6 +19,7 @@ import javax.jms.Session;
 @Service
 public class ActiveMqService {
 
+    private static final Logger LOG = LoggerFactory.getLogger(ActiveMqService.class);
     @Resource
     private JmsTemplate jmsTemplate;
 
@@ -31,6 +34,6 @@ public class ActiveMqService {
                 return session.createTextMessage(JsonHelper.toJSon(mailVo));
             }
         });
+        LOG.info("send msg receiver={} title={} content={} to MQ", receiver, title, content);
     }
-
 }

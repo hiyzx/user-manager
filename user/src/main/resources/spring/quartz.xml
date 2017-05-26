@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
+    <bean id="timer" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+        <property name="triggers">
+            <list>
+                <ref bean="healthCheckTrigger"/>
+            </list>
+        </property>
+        <property name="taskExecutor">
+            <bean class="java.util.concurrent.Executors" factory-method="newCachedThreadPool"/>
+        </property>
+    </bean>
+    <bean id="jobDetailFactoryParent" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean"
+          abstract="true">
+        <property name="concurrent" value="false"/>
+    </bean>
+    <bean id="cronTriggerBeanParent" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean"
+          abstract="true"/>
+
+    <!-- 定时健康检查 -->
+    <bean id="healthCheckTrigger" parent="cronTriggerBeanParent">
+        <property name="jobDetail" ref="healthCheckJobDetail"/>
+        <property name="cronExpression" value="0 */1 * * * ?"/>
+    </bean>
+
+    <bean id="healthCheckJobDetail" parent="jobDetailFactoryParent">
+        <property name="targetObject">
+            <bean class="com.zero.user.service.HealthCheckService"/>
+        </property>
+        <property name="targetMethod" value="quartzHealthCheck"/>
+    </bean>
+</beans>

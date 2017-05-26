@@ -3,12 +3,15 @@
 */
 package com.zero.mail.util;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.core.task.TaskExecutor;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 
 import javax.annotation.Resource;
+import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 
 /**
@@ -16,6 +19,7 @@ import javax.mail.internet.MimeMessage;
  */
 public class MailUtil {
 
+    private static final Logger LOG = LoggerFactory.getLogger(MailUtil.class);
     @Resource
     private JavaMailSender javaMailSender;
     @Resource
@@ -44,7 +48,7 @@ public class MailUtil {
      * 发送邮件-使用线程池
      */
     public void sendMailThread(String receiver, String subject, String content) {
-        this.taskExecutor.execute(new SendMailThread(receiver, subject, content));
+        taskExecutor.execute(new SendMailThread(receiver, subject, content));
     }
 
     /**
@@ -59,8 +63,8 @@ public class MailUtil {
             messageHelper.setTo(receiver);
             messageHelper.setText(content, true);// 支持html
             javaMailSender.send(message);
-        } catch (javax.mail.MessagingException e) {
-            e.printStackTrace();
+        } catch (MessagingException e) {
+            LOG.error(e.getMessage(), e);
         }
     }
 }
