@@ -35,7 +35,6 @@ public class UserService {
     private static final int EMAIL_EXPIRE_TIME = ((Long) TimeUnit.DAYS.toSeconds(1)).intValue();
     @Resource
     private UserMapper userMapper;
-    // private ActiveMqService activeMqService;
     @Resource
     private MailService mailService;
     private static final String HOST = "http://localhost";
@@ -95,12 +94,6 @@ public class UserService {
         RedisHelper.set(redisKey, JsonHelper.toJSon(tmp));
         RedisHelper.expire(redisKey, EMAIL_EXPIRE_TIME);
         mailService.sendMail(email, "绑定邮箱", String.format("点击<a>%s:%s%s%s%s</a>完成绑定", HOST, PORT, URI, "?key=", key));
-        // MailVo mailVo = new MailVo();
-        // mailVo.setTo(email);
-        // mailVo.setTitle("绑定邮箱");
-        // mailVo.setContent(String.format("点击<a>%s:%s%s%s%s</a>完成绑定", HOST,
-        // PORT, URI, "?key=", key));
-        // activeMqService.sendMessage(mailVo);
     }
 
     public int updateBindEmail(String key) throws Exception {

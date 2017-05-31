@@ -28,15 +28,15 @@ public class HealthCheckService {
 
     private static final Logger LOG = LoggerFactory.getLogger(HealthCheckService.class);
     @Resource
-    private HikariDataSource dataSource;
+    private HikariDataSource masterDataSource;
     @Resource
     private HttpClient mailHttpClient;
 
     private HealthCheckVo checkDBConnection() {
-        String url = dataSource.getJdbcUrl();
-        String driver = dataSource.getDriverClassName();
-        String user = dataSource.getUsername();
-        String password = dataSource.getPassword();
+        String url = masterDataSource.getJdbcUrl();
+        String driver = masterDataSource.getDriverClassName();
+        String user = masterDataSource.getUsername();
+        String password = masterDataSource.getPassword();
         Connection conn = null;
         Statement statement = null;
         HealthCheckVo model = new HealthCheckVo();
@@ -80,7 +80,6 @@ public class HealthCheckService {
         healthCheckVos.add(mailHttpClient.healthCheck());
         healthCheckVos.add(RedisHelper.checkRedisConnection());
         healthCheckVos.add(checkDBConnection());
-        System.out.println(JsonHelper.toJSon(healthCheckVos));
         return healthCheckVos;
     }
 }

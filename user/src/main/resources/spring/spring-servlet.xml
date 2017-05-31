@@ -66,6 +66,7 @@
             <mvc:exclude-mapping path="/register.json"/>
             <mvc:exclude-mapping path="/version"/>
             <mvc:exclude-mapping path="/authImage"/>
+            <mvc:exclude-mapping path="/queryById.json"/>
             <mvc:exclude-mapping path="/healthCheck"/>
             <mvc:exclude-mapping path="/exportExcel.json"/>
             <mvc:exclude-mapping path="/validateEmail.json"/>

@@ -13,9 +13,6 @@ import javax.jms.JMSException;
 import javax.jms.Message;
 import javax.jms.Session;
 
-/**
- * Created by Administrator on 2017/5/15.
- */
 @Service
 public class ActiveMqService {
 

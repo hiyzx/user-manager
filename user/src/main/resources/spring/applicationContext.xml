@@ -13,13 +13,9 @@
     <!-- jdbcconfig -->
     <context:property-placeholder location="classpath:user.properties" ignore-unresolvable="true"/>
 
-    <!-- 数据源 -->
-    <!-- Hikari Datasource -->
-    <bean id="dataSource" class="com.zaxxer.hikari.HikariDataSource" destroy-method="close">
+    <!--数据源 Hikari Datasource -->
+    <bean id="parentDataSource" class="com.zaxxer.hikari.HikariDataSource" abstract="true" destroy-method="close">
         <property name="driverClassName" value="${db.driver}"/>
-        <property name="jdbcUrl" value="${db.url}"/>
-        <property name="username" value="${db.username}"/>
-        <property name="password" value="${db.password}"/>
         <!-- 连接只读数据库时配置为true， 保证安全 -->
         <property name="readOnly" value="false"/>
         <!-- 等待连接池分配连接的最大时长（毫秒），超过这个时长还没可用的连接则发生SQLException， 缺省:30秒 -->
@@ -33,19 +29,43 @@
         <property name="maximumPoolSize" value="${db.maxPoolSize}"/>
     </bean>
 
+    <!-- master-mysql -->
+    <bean id="masterDataSource" parent="parentDataSource">
+        <property name="jdbcUrl" value="${db_master.url}"/>
+        <property name="username" value="${db_master.username}"/>
+        <property name="password" value="${db_master.password}"/>
+    </bean>
+
+    <!-- slave-mysql -->
+    <bean id="slaveDataSource" parent="parentDataSource">
+        <property name="jdbcUrl" value="${db_slave.url}"/>
+        <property name="username" value="${db_slave.username}"/>
+        <property name="password" value="${db_slave.password}"/>
+    </bean>
+
+    <bean id="dataSource" class="com.zero.user.util.mysql.DynamicDataSource">
+        <property name="writeDataSource" ref="masterDataSource"/>
+        <property name="readDataSource" ref="slaveDataSource"/>
+    </bean>
+
 
     <!-- 使用spring的会话管理 -->
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
         <property name="dataSource" ref="dataSource"/>
         <property name="mapperLocations" value="classpath:com/zero/dao/**/*.xml"/>
+        <property name="plugins">
+            <array>
+                <bean class="com.zero.user.util.mysql.DynamicPlugin" />
+            </array>
+        </property>
     </bean>
     <bean id='sqlSessionTemplate' class="org.mybatis.spring.SqlSessionTemplate">
         <constructor-arg ref="sqlSessionFactory"/>
     </bean>
-    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+    <bean id="transactionManager" class="com.zero.user.util.mysql.DynamicDataSourceTransactionManager">
         <property name="dataSource" ref="dataSource"/>
     </bean>
-    <!-- enable autowired for mapper -->
+
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
         <property name="basePackage" value="com.zero.dao"/>
     </bean>
@@ -56,7 +76,6 @@
             <tx:method name="add*" propagation="REQUIRED" isolation="DEFAULT" read-only="false"/>
             <tx:method name="update*" propagation="REQUIRED" isolation="DEFAULT" read-only="false"/>
             <tx:method name="delete*" propagation="REQUIRED" isolation="DEFAULT" read-only="false"/>
-            <tx:method name="get*" propagation="REQUIRED" isolation="DEFAULT" read-only="true"/>
             <tx:method name="*" propagation="REQUIRED" isolation="DEFAULT" read-only="true"/>
         </tx:attributes>
     </tx:advice>

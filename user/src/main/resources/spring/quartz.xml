@@ -21,7 +21,7 @@
     <!-- 定时健康检查 -->
     <bean id="healthCheckTrigger" parent="cronTriggerBeanParent">
         <property name="jobDetail" ref="healthCheckJobDetail"/>
-        <property name="cronExpression" value="0 */1 * * * ?"/>
+        <property name="cronExpression" value="0 */59 * * * ?"/>
     </bean>
 
     <bean id="healthCheckJobDetail" parent="jobDetailFactoryParent">
