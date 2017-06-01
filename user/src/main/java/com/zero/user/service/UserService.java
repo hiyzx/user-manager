@@ -110,6 +110,10 @@ public class UserService {
         } else {
             throw new BaseException(CodeEnum.BIND_EMAIL_FAIL, "绑定失败!");
         }
+    }
+
+    public User getById(Integer id) {
+        return userMapper.selectByPrimaryKey(id);
 
     }
 

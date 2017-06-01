@@ -3,10 +3,11 @@ package com.zero.util;
 import com.zero.vo.HealthCheckVo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 import redis.clients.jedis.ShardedJedis;
 import redis.clients.jedis.ShardedJedisPool;
 
+import javax.annotation.PostConstruct;
+import javax.annotation.Resource;
 import java.util.Date;
 
 /**
@@ -16,86 +17,46 @@ import java.util.Date;
  */
 public class RedisHelper {
     private static final Logger LOG = LoggerFactory.getLogger(RedisHelper.class);
-    private static org.springframework.context.ApplicationContext context;
-    private static ShardedJedisPool pool;
+    @Resource
+    private ShardedJedisPool shardedJedisPool;
+    private static RedisHelper redisHelper;
 
-    static {
-        try {
-            context = new ClassPathXmlApplicationContext("applicationContext-redis.xml");
-        } catch (Exception var1) {
-            throw new IllegalArgumentException("applicationContext-redis.xml没有被找到");
-        }
-
-        if (context == null) {
-            throw new IllegalArgumentException("context不允许为空");
-        } else {
-            pool = (ShardedJedisPool) context.getBean("shardedJedisPool");
-            if (pool == null) {
-                throw new IllegalArgumentException("bean name 'shardedJedisPool' is not defined");
-            }
-        }
+    @PostConstruct
+    public void init() {
+        redisHelper = this;
+        redisHelper.shardedJedisPool = this.shardedJedisPool;
     }
 
-    public RedisHelper() {
+    private RedisHelper() {
+
+    }
+
+    private static ShardedJedisPool getShardedJedisPool() {
+        return redisHelper.shardedJedisPool;
     }
 
     public static Long delete(String key) throws Exception {
-        ShardedJedis jedis = pool.getResource();
-
-        Long rtn;
-        try {
-            rtn = jedis.del(getRedisKey(key));
-        } catch (Exception e) {
-            throw e;
-        } finally {
-            jedis.close();
+        try (ShardedJedis jedis = getShardedJedisPool().getResource()) {
+            return jedis.del(getRedisKey(key));
         }
-
-        return rtn;
     }
 
     public static String set(String key, String value) throws Exception {
-        ShardedJedis jedis = pool.getResource();
-        String rtn;
-        try {
-            rtn = jedis.set(getRedisKey(key), value);
-        } catch (Exception e) {
-            throw e;
-        } finally {
-            jedis.close();
+        try (ShardedJedis jedis = getShardedJedisPool().getResource()) {
+            return jedis.set(getRedisKey(key), value);
         }
-
-        return rtn;
     }
 
     public static long expire(String key, int seconds) throws Exception {
-        ShardedJedis jedis = pool.getResource();
-
-        long rtn;
-        try {
-            rtn = jedis.expire(getRedisKey(key), seconds);
-        } catch (Exception e) {
-            throw e;
-        } finally {
-            jedis.close();
+        try (ShardedJedis jedis = getShardedJedisPool().getResource()) {
+            return jedis.expire(getRedisKey(key), seconds);
         }
-
-        return rtn;
     }
 
     public static String get(String key) throws Exception {
-        ShardedJedis jedis = pool.getResource();
-
-        String rtn;
-        try {
-            rtn = jedis.get(getRedisKey(key));
-        } catch (Exception e) {
-            throw e;
-        } finally {
-            jedis.close();
+        try (ShardedJedis jedis = getShardedJedisPool().getResource();) {
+            return jedis.get(getRedisKey(key));
         }
-
-        return rtn;
     }
 
     public static String emailKeyWrapper(String key) {

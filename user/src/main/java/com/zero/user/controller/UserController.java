@@ -121,6 +121,14 @@ public class UserController {
     }
 
     @ResponseBody
+    @RequestMapping(value = "/getById.json", method = RequestMethod.GET)
+    @ApiOperation("校验")
+    public ReturnVo<User> getById(@ApiParam(value = "id", required = true) @RequestParam Integer id) throws Exception {
+        return ReturnVo.success(userService.getById(id));
+
+    }
+
+    @ResponseBody
     @RequestMapping(value = "/uploadHeadImg.json", method = POST)
     @ApiOperation(value = "上传头像")
     public BaseReturnVo uploadMedia(@RequestParam String sessionId,

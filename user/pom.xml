@@ -143,6 +143,7 @@
             <artifactId>httpasyncclient</artifactId>
         </dependency>
 
+        <!-- swagger相关 -->
         <dependency>
             <groupId>io.springfox</groupId>
             <artifactId>springfox-swagger2</artifactId>
