@@ -1,5 +1,10 @@
 package com.zero.util;
 
+import org.springframework.util.StringUtils;
+
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 /**
  * The class JacksonUtil</br>
  * json字符与对像转换
@@ -8,7 +13,7 @@ package com.zero.util;
 public final class JsonHelper {
 
     private static final org.slf4j.Logger LOG = org.slf4j.LoggerFactory.getLogger(JsonHelper.class);
-    public static com.fasterxml.jackson.databind.ObjectMapper objectMapper;
+    public static ObjectMapper objectMapper;
 
     /**
      * 使用泛型方法，把json字符串转换为相应的JavaBean对象。
@@ -22,13 +27,12 @@ public final class JsonHelper {
      */
     public static <T> T readValue(String jsonStr, Class<T> valueType) {
         T rtn;
-        if (org.springframework.util.StringUtils.isEmpty(jsonStr)) {
+        if (StringUtils.isEmpty(jsonStr)) {
             rtn = null;
         } else {
             if (objectMapper == null) {
-                objectMapper = new com.fasterxml.jackson.databind.ObjectMapper();
+                objectMapper = new ObjectMapper();
             }
-
             try {
                 rtn = objectMapper.readValue(jsonStr, valueType);
             } catch (Exception e) {
@@ -46,15 +50,14 @@ public final class JsonHelper {
      * @param valueTypeRef
      * @return
      */
-    public static <T> T readValue(String jsonStr, com.fasterxml.jackson.core.type.TypeReference<T> valueTypeRef) {
+    public static <T> T readValue(String jsonStr, TypeReference<T> valueTypeRef) {
         T rtn;
-        if (org.springframework.util.StringUtils.isEmpty(jsonStr)) {
+        if (StringUtils.isEmpty(jsonStr)) {
             rtn = null;
         } else {
             if (objectMapper == null) {
-                objectMapper = new com.fasterxml.jackson.databind.ObjectMapper();
+                objectMapper = new ObjectMapper();
             }
-
             try {
                 rtn = objectMapper.readValue(jsonStr, valueTypeRef);
             } catch (Exception e) {
@@ -77,7 +80,7 @@ public final class JsonHelper {
             rtn = null;
         } else {
             if (objectMapper == null) {
-                objectMapper = new com.fasterxml.jackson.databind.ObjectMapper();
+                objectMapper = new ObjectMapper();
             }
 
             try {
