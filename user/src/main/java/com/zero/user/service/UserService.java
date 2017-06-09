@@ -8,6 +8,7 @@ import com.zero.po.UserExample;
 import com.zero.user.util.RegexUtil;
 import com.zero.user.vo.BindEmailVo;
 import com.zero.user.vo.dto.UserDto;
+import com.zero.util.DateHelper;
 import com.zero.util.JsonHelper;
 import com.zero.util.MediaHelper;
 import com.zero.util.RedisHelper;
@@ -15,6 +16,7 @@ import org.apache.poi.ss.usermodel.IndexedColors;
 import org.apache.poi.xssf.usermodel.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -37,11 +39,10 @@ public class UserService {
     private UserMapper userMapper;
     @Resource
     private MailService mailService;
-    private static final String HOST = "http://localhost";
-    private static final String PORT = "8080";
-    private static final String URI = "/user/validateEmail.json";
+    @Value("${bind.email.content}")
+    private String bindEmailContent;
 
-    public int login(String username, String password) throws BaseException {
+    public int updateLogin(String username, String password) throws BaseException {
         UserExample example = new UserExample();
         example.createCriteria().andNameEqualTo(username).andPasswordEqualTo(password);
         java.util.List<User> users = userMapper.selectByExample(example);
@@ -49,6 +50,10 @@ public class UserService {
             throw new com.zero.exception.BaseException(CodeEnum.LOGIN_FAIL, "用户名或者密码错误!");
         } else {
             Integer userId = users.get(0).getId();
+            User tmp = new User();
+            tmp.setId(userId);
+            tmp.setLastLoginTime(DateHelper.getCurrentDateTime());
+            userMapper.updateByPrimaryKeySelective(tmp);
             LOG.info("userId={} login success", userId);
             return userId;
         }
@@ -56,7 +61,7 @@ public class UserService {
 
     public User getUserInfo(int userId) {
         User user = userMapper.selectByPrimaryKey(userId);
-        user.setHeadimg(MediaHelper.getFullMediaPath(user.getHeadimg()));
+        user.setHeadImg(MediaHelper.getFullMediaPath(user.getHeadImg()));
         user.setPassword("******");
         return user;
     }
@@ -77,7 +82,7 @@ public class UserService {
     public void updateHeadImg(Integer userId, String fileName) {
         User tmp = new User();
         tmp.setId(userId);
-        tmp.setHeadimg(fileName);
+        tmp.setHeadImg(fileName);
         userMapper.updateByPrimaryKeySelective(tmp);
         LOG.info("userId={} update headImg={}", userId, fileName);
     }
@@ -93,7 +98,7 @@ public class UserService {
         String redisKey = RedisHelper.emailKeyWrapper(key);
         RedisHelper.set(redisKey, JsonHelper.toJSon(tmp));
         RedisHelper.expire(redisKey, EMAIL_EXPIRE_TIME);
-        mailService.sendMail(email, "绑定邮箱", String.format("点击<a>%s:%s%s%s%s</a>完成绑定", HOST, PORT, URI, "?key=", key));
+        mailService.sendMail(email, "绑定邮箱", String.format(bindEmailContent, key));
     }
 
     public int updateBindEmail(String key) throws Exception {
@@ -110,11 +115,6 @@ public class UserService {
         } else {
             throw new BaseException(CodeEnum.BIND_EMAIL_FAIL, "绑定失败!");
         }
-    }
-
-    public User getById(Integer id) {
-        return userMapper.selectByPrimaryKey(id);
-
     }
 
     public XSSFWorkbook generateExcel() {

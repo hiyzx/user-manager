@@ -28,7 +28,6 @@ public class RedisHelper {
     }
 
     private RedisHelper() {
-
     }
 
     private static ShardedJedisPool getShardedJedisPool() {

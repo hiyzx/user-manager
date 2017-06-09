@@ -1,6 +1,7 @@
 package com.zero.po;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class UserExample {
@@ -524,73 +525,133 @@ public class UserExample {
             return (Criteria) this;
         }
 
-        public Criteria andHeadimgIsNull() {
-            addCriterion("headImg is null");
+        public Criteria andHeadImgIsNull() {
+            addCriterion("head_img is null");
             return (Criteria) this;
         }
 
-        public Criteria andHeadimgIsNotNull() {
-            addCriterion("headImg is not null");
+        public Criteria andHeadImgIsNotNull() {
+            addCriterion("head_img is not null");
             return (Criteria) this;
         }
 
-        public Criteria andHeadimgEqualTo(String value) {
-            addCriterion("headImg =", value, "headimg");
+        public Criteria andHeadImgEqualTo(String value) {
+            addCriterion("head_img =", value, "headImg");
             return (Criteria) this;
         }
 
-        public Criteria andHeadimgNotEqualTo(String value) {
-            addCriterion("headImg <>", value, "headimg");
+        public Criteria andHeadImgNotEqualTo(String value) {
+            addCriterion("head_img <>", value, "headImg");
             return (Criteria) this;
         }
 
-        public Criteria andHeadimgGreaterThan(String value) {
-            addCriterion("headImg >", value, "headimg");
+        public Criteria andHeadImgGreaterThan(String value) {
+            addCriterion("head_img >", value, "headImg");
             return (Criteria) this;
         }
 
-        public Criteria andHeadimgGreaterThanOrEqualTo(String value) {
-            addCriterion("headImg >=", value, "headimg");
+        public Criteria andHeadImgGreaterThanOrEqualTo(String value) {
+            addCriterion("head_img >=", value, "headImg");
             return (Criteria) this;
         }
 
-        public Criteria andHeadimgLessThan(String value) {
-            addCriterion("headImg <", value, "headimg");
+        public Criteria andHeadImgLessThan(String value) {
+            addCriterion("head_img <", value, "headImg");
             return (Criteria) this;
         }
 
-        public Criteria andHeadimgLessThanOrEqualTo(String value) {
-            addCriterion("headImg <=", value, "headimg");
+        public Criteria andHeadImgLessThanOrEqualTo(String value) {
+            addCriterion("head_img <=", value, "headImg");
             return (Criteria) this;
         }
 
-        public Criteria andHeadimgLike(String value) {
-            addCriterion("headImg like", value, "headimg");
+        public Criteria andHeadImgLike(String value) {
+            addCriterion("head_img like", value, "headImg");
             return (Criteria) this;
         }
 
-        public Criteria andHeadimgNotLike(String value) {
-            addCriterion("headImg not like", value, "headimg");
+        public Criteria andHeadImgNotLike(String value) {
+            addCriterion("head_img not like", value, "headImg");
             return (Criteria) this;
         }
 
-        public Criteria andHeadimgIn(List<String> values) {
-            addCriterion("headImg in", values, "headimg");
+        public Criteria andHeadImgIn(List<String> values) {
+            addCriterion("head_img in", values, "headImg");
             return (Criteria) this;
         }
 
-        public Criteria andHeadimgNotIn(List<String> values) {
-            addCriterion("headImg not in", values, "headimg");
+        public Criteria andHeadImgNotIn(List<String> values) {
+            addCriterion("head_img not in", values, "headImg");
             return (Criteria) this;
         }
 
-        public Criteria andHeadimgBetween(String value1, String value2) {
-            addCriterion("headImg between", value1, value2, "headimg");
+        public Criteria andHeadImgBetween(String value1, String value2) {
+            addCriterion("head_img between", value1, value2, "headImg");
             return (Criteria) this;
         }
 
-        public Criteria andHeadimgNotBetween(String value1, String value2) {
-            addCriterion("headImg not between", value1, value2, "headimg");
+        public Criteria andHeadImgNotBetween(String value1, String value2) {
+            addCriterion("head_img not between", value1, value2, "headImg");
+            return (Criteria) this;
+        }
+
+        public Criteria andLastLoginTimeIsNull() {
+            addCriterion("last_login_time is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andLastLoginTimeIsNotNull() {
+            addCriterion("last_login_time is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andLastLoginTimeEqualTo(Date value) {
+            addCriterion("last_login_time =", value, "lastLoginTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andLastLoginTimeNotEqualTo(Date value) {
+            addCriterion("last_login_time <>", value, "lastLoginTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andLastLoginTimeGreaterThan(Date value) {
+            addCriterion("last_login_time >", value, "lastLoginTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andLastLoginTimeGreaterThanOrEqualTo(Date value) {
+            addCriterion("last_login_time >=", value, "lastLoginTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andLastLoginTimeLessThan(Date value) {
+            addCriterion("last_login_time <", value, "lastLoginTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andLastLoginTimeLessThanOrEqualTo(Date value) {
+            addCriterion("last_login_time <=", value, "lastLoginTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andLastLoginTimeIn(List<Date> values) {
+            addCriterion("last_login_time in", values, "lastLoginTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andLastLoginTimeNotIn(List<Date> values) {
+            addCriterion("last_login_time not in", values, "lastLoginTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andLastLoginTimeBetween(Date value1, Date value2) {
+            addCriterion("last_login_time between", value1, value2, "lastLoginTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andLastLoginTimeNotBetween(Date value1, Date value2) {
+            addCriterion("last_login_time not between", value1, value2, "lastLoginTime");
             return (Criteria) this;
         }
     }

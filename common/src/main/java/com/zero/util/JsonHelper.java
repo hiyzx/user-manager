@@ -6,9 +6,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
- * The class JacksonUtil</br>
  * json字符与对像转换
- * 
  */
 public final class JsonHelper {
 
@@ -70,9 +68,6 @@ public final class JsonHelper {
 
     /**
      * 把JavaBean转换为json字符串
-     *
-     * @param object
-     * @return
      */
     public static String toJSon(Object object) {
         String rtn;

@@ -72,7 +72,7 @@ public class UserController {
     @RequestMapping(value = "/login.json", method = RequestMethod.POST)
     @ApiOperation("登陆")
     public ReturnVo<String> login(@RequestParam String username, @RequestParam String password) throws Exception {
-        int userId = userService.login(username, password);
+        int userId = userService.updateLogin(username, password);
         String sessionId = SessionHelper.createSessionId(userId);
         return ReturnVo.success(sessionId);
     }
@@ -117,14 +117,6 @@ public class UserController {
         int userId = userService.updateBindEmail(key);
         String sessionId = SessionHelper.createSessionId(userId);
         return ReturnVo.success(sessionId);
-
-    }
-
-    @ResponseBody
-    @RequestMapping(value = "/getById.json", method = RequestMethod.GET)
-    @ApiOperation("校验")
-    public ReturnVo<User> getById(@ApiParam(value = "id", required = true) @RequestParam Integer id) throws Exception {
-        return ReturnVo.success(userService.getById(id));
 
     }
 

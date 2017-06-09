@@ -1,8 +1,14 @@
 package com.zero.po;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.zero.util.TimeZone;
 import io.swagger.annotations.ApiModelProperty;
 
+import java.util.Date;
+
 public class User {
+
+    private static final String FORMAT = "yyyy-MM-dd HH:mm";
     private Integer id;
 
     @ApiModelProperty(value = "年龄")
@@ -20,8 +26,11 @@ public class User {
     @ApiModelProperty(value = "邮箱")
     private String email;
 
-    @ApiModelProperty(value = "头像")
-    private String headimg;
+    private String headImg;
+
+    @ApiModelProperty(value = "最后登陆时间")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = FORMAT, timezone = TimeZone.TIMEZONE)
+    private Date lastLoginTime;
 
     public Integer getId() {
         return id;
@@ -71,11 +80,19 @@ public class User {
         this.email = email == null ? null : email.trim();
     }
 
-    public String getHeadimg() {
-        return headimg;
+    public String getHeadImg() {
+        return headImg;
     }
 
-    public void setHeadimg(String headimg) {
-        this.headimg = headimg == null ? null : headimg.trim();
+    public void setHeadImg(String headImg) {
+        this.headImg = headImg == null ? null : headImg.trim();
+    }
+
+    public Date getLastLoginTime() {
+        return lastLoginTime;
+    }
+
+    public void setLastLoginTime(Date lastLoginTime) {
+        this.lastLoginTime = lastLoginTime;
     }
 }
