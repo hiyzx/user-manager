@@ -10,7 +10,6 @@
     <modules>
         <module>../common</module>
         <module>../user</module>
-        <module>../mail</module>
     </modules>
     <packaging>pom</packaging>
 

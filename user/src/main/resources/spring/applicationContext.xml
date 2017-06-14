@@ -48,7 +48,6 @@
         <property name="readDataSource" ref="slaveDataSource"/>
     </bean>
 
-
     <!-- 使用spring的会话管理 -->
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
         <property name="dataSource" ref="dataSource"/>
