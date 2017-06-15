@@ -181,6 +181,20 @@
             <groupId>org.quartz-scheduler</groupId>
             <artifactId>quartz</artifactId>
         </dependency>
+
+        <!-- dubbo -->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>dubbo</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.zookeeper</groupId>
+            <artifactId>zookeeper</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.101tec</groupId>
+            <artifactId>zkclient</artifactId>
+        </dependency>
     </dependencies>
 
     <profiles>
@@ -264,7 +278,7 @@
                 <version>2.1</version>
                 <configuration>
                     <path>/user</path>
-                    <port>8080</port>
+                    <port>8081</port>
                     <uriEncoding>UTF-8</uriEncoding>
                 </configuration>
             </plugin>
