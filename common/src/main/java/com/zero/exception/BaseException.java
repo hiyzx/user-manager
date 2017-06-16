@@ -1,5 +1,7 @@
 package com.zero.exception;
 
+import com.zero.enums.CodeEnum;
+
 /**
  * @Description:
  * @author: yezhaoxing
@@ -7,21 +9,21 @@ package com.zero.exception;
  */
 public class BaseException extends Exception {
 
-    private com.zero.enums.CodeEnum codeEnum;
+    private CodeEnum codeEnum;
 
     private String msg;
 
-    public BaseException(com.zero.enums.CodeEnum codeEnum, String msg) {
+    public BaseException(CodeEnum codeEnum, String msg) {
         super(msg);
         this.codeEnum = codeEnum;
         this.msg = msg;
     }
 
-    public com.zero.enums.CodeEnum getCodeEnum() {
+    public CodeEnum getCodeEnum() {
         return codeEnum;
     }
 
-    public void setCodeEnum(com.zero.enums.CodeEnum codeEnum) {
+    public void setCodeEnum(CodeEnum codeEnum) {
         this.codeEnum = codeEnum;
     }
 

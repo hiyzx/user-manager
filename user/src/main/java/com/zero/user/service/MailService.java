@@ -26,7 +26,7 @@ public class MailService {
     @Resource
     private HttpClient mailHttpClient;
 
-    boolean sendMail(String receiver, String title, String content) throws IOException {
+    public boolean sendMail(String receiver, String title, String content) throws IOException {
         long startTime = System.currentTimeMillis();
         Map<String, String> params = new HashMap<>();
         params.put("receiver", receiver);

@@ -32,6 +32,22 @@ public class HealthCheckService {
     @Resource
     private HttpClient mailHttpClient;
 
+    public void quartzHealthCheck() throws ParseException {
+        System.out.println(JsonHelper.toJSon(commonHealthCheck()));
+    }
+
+    public List<HealthCheckVo> healthCheck() throws ParseException {
+        return commonHealthCheck();
+    }
+
+    private List<HealthCheckVo> commonHealthCheck() throws ParseException {
+        List<HealthCheckVo> healthCheckVos = new ArrayList<>();
+        healthCheckVos.add(mailHttpClient.healthCheck());
+        healthCheckVos.add(RedisHelper.checkRedisConnection());
+        healthCheckVos.add(checkDBConnection());
+        return healthCheckVos;
+    }
+
     private HealthCheckVo checkDBConnection() {
         String url = masterDataSource.getJdbcUrl();
         String driver = masterDataSource.getDriverClassName();
@@ -65,21 +81,5 @@ public class HealthCheckService {
             }
         }
         return model;
-    }
-
-    public void quartzHealthCheck() throws ParseException {
-        System.out.println(JsonHelper.toJSon(commonHealthCheck()));
-    }
-
-    public List<HealthCheckVo> healthCheck() throws ParseException {
-        return commonHealthCheck();
-    }
-
-    private List<HealthCheckVo> commonHealthCheck() throws ParseException {
-        List<HealthCheckVo> healthCheckVos = new ArrayList<>();
-        healthCheckVos.add(mailHttpClient.healthCheck());
-        healthCheckVos.add(RedisHelper.checkRedisConnection());
-        healthCheckVos.add(checkDBConnection());
-        return healthCheckVos;
     }
 }

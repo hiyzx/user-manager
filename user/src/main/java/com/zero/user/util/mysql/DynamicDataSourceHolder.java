@@ -4,7 +4,7 @@ import com.zero.enums.DynamicDataSourceGlobal;
 
 public final class DynamicDataSourceHolder {
 
-    private static final ThreadLocal<DynamicDataSourceGlobal> holder = new ThreadLocal<DynamicDataSourceGlobal>();
+    private static final ThreadLocal<DynamicDataSourceGlobal> holder = new ThreadLocal<>();
 
     private DynamicDataSourceHolder() {
         //
