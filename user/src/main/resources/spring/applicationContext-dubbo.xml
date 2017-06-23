@@ -12,4 +12,8 @@
     <!-- <dubbo:registry address="multicast://224.5.6.7:1234" /> -->
     <!-- 生成远程服务代理，可以像使用本地bean一样使用userService -->
     <dubbo:reference id="cityInfoService" interface="com.zero.data.service.ICityInfoService"/>
+    <!-- 关闭某个启动时对某个服务的检查.没有的话就报错-->
+    <dubbo:reference interface="com.zero.data.service.ICityInfoService" check="false"/>
+    <!-- 引用缺省默认是延迟初始化,只有被注入到其他bean时才会初始化.可以使用饥饿加载,即动态代理-->
+    <dubbo:reference interface="com.zero.data.service.ICityInfoService" init="true"/>
 </beans>

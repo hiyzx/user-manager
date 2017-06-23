@@ -60,7 +60,7 @@ public class ThreadTest {
     private class Apple {
         private int id;
 
-	    Apple(Integer id) {
+        Apple(Integer id) {
             this.id = id;
         }
 
@@ -103,7 +103,7 @@ public class ThreadTest {
 
     private class Produce implements Runnable {
 
-        private Basket basket = null;
+        private Basket basket;
 
         Produce(Basket basket) {
             this.basket = basket;
@@ -115,17 +115,16 @@ public class ThreadTest {
                 Apple apple = new Apple(i);
                 basket.push(apple);
                 System.out.println("生产了" + apple.toString());
-                /*try {
-                    Thread.sleep(10);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }*/
+                /*
+                 * try { Thread.sleep(10); } catch (InterruptedException e) {
+                 * e.printStackTrace(); }
+                 */
             }
         }
     }
 
     private class Consumer implements Runnable {
-        private Basket basket = null;
+        private Basket basket;
 
         Consumer(Basket basket) {
             this.basket = basket;
@@ -134,13 +133,13 @@ public class ThreadTest {
         @Override
         public void run() {
             for (int i = 0; i < 20; i++) {
-                Apple pop = basket.pop();
-                System.out.println("消费了" + pop.toString());
-              /*  try {
+                Apple apple = basket.pop();
+                System.out.println("消费了" + apple.toString());
+                try {
                     Thread.sleep(100);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
-                }*/
+                }
             }
         }
     }
